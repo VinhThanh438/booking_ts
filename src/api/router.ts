@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.use('/', ticketRoute);
 
-router.use('/booking', tdRoute)
+router.use('/booking', tdRoute);
 
 export default router;

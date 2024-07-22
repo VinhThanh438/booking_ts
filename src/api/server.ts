@@ -8,13 +8,13 @@ export default class ExpressServer {
   private httpServer: Server;
 
   public async setup(port: number): Promise<Express> {
-    const server = express()
-    
-    this.configBodyParser(server)
-    this.useRoute(server);
-    this.listen(server, port)
+    const server = express();
 
-    return this.server
+    this.configBodyParser(server);
+    this.useRoute(server);
+    this.listen(server, port);
+
+    return this.server;
   }
 
   public useRoute(app: Express) {
@@ -28,7 +28,7 @@ export default class ExpressServer {
 
   public listen(app: Express, port: number) {
     app.listen(port, () => {
-        console.log(`Server is running on port: ${port}`)
-    })
+      console.log(`Server is running on port: ${port}`);
+    });
   }
 }

@@ -1,7 +1,7 @@
-import express from 'express'
-import ticketDetailController from './td.controller'
-const tdRoute = express.Router()
+import express from 'express';
+import ticketDetailController from './td.controller';
+const tdRoute = express.Router();
 
-tdRoute.post('/', ticketDetailController.addBooking)
+tdRoute.post('/', ticketDetailController.addBooking);
 
-export default tdRoute
+export default tdRoute;

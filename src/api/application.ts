@@ -5,20 +5,19 @@ import redisConnect from '@common/infrastructure/redis.connect';
 import ticketEvent from '@common/ticket/ticket.event';
 
 export class Application {
+  public static async createApp(): Promise<ExpressServer> {
+    await connectMongoose.connect();
+    await redisConnect.connect();
 
-    public static async createApp(): Promise<ExpressServer> {
-        await connectMongoose.connect()
-        await redisConnect.connect()
+    this.registerEvent();
 
-        this.registerEvent()
+    const expressServer = new ExpressServer();
+    expressServer.setup(PORT);
 
-        const expressServer = new ExpressServer()
-        expressServer.setup(PORT)
+    return expressServer;
+  }
 
-        return expressServer
-    }
-
-    public static registerEvent() {
-        ticketEvent.register()
-    }
+  public static registerEvent() {
+    ticketEvent.register();
+  }
 }
