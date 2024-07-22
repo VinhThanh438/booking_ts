@@ -5,4 +5,6 @@ const ticketRoute = express.Router();
 
 ticketRoute.get('/', ticketController.getALL);
 
+ticketRoute.post('/', ticketController.addTicket)
+
 export default ticketRoute;
