@@ -8,4 +8,6 @@ const pdSchema = new Schema<IPd>({
   confirmation_time: { type: Date, required: true, default: Date() },
 });
 
-export default pdSchema;
+const PaymentDetail = model<IPd>('PaymentDetail', pdSchema);
+
+export default PaymentDetail;
