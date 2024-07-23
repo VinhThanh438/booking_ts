@@ -10,6 +10,6 @@ export default class ticketDetailEvent {
   }
 
   public static async handler(id: unknown): Promise<void> {
-    await AutoCancelJob.register()
+    await (await QueueService.getQueue('AUTO_CANCEL')).add({}, {delay: 7 * 1000})
   }
 }
