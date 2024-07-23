@@ -1,4 +1,4 @@
-import Ticket from '@api/ticket/Ticket';
+import Ticket from '@common/ticket/Ticket';
 import eventbus from '@common/eventbus';
 import logger from '@common/logger';
 

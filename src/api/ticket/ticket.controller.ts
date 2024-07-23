@@ -1,6 +1,6 @@
 import logger from '@common/logger';
 import { Request, Response } from 'express';
-import Ticket from './Ticket';
+import Ticket from '@common/booking/Td';
 
 export default class ticketController {
   static async getALL(req: Request, res: Response): Promise<void> {

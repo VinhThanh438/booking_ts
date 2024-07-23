@@ -1,8 +1,6 @@
-import TicketDetail from '@api/ticketdetail/Td';
 import eventbus from '@common/eventbus';
 import logger from '@common/logger';
 import QueueService from '@common/queue/queue.service'
-import { AutoCancelJob } from '@worker/booking/auto-cancel.job';
 
 export default class ticketDetailEvent {
   public static register() {
@@ -10,6 +8,8 @@ export default class ticketDetailEvent {
   }
 
   public static async handler(id: unknown): Promise<void> {
-    await (await QueueService.getQueue('AUTO_CANCEL')).add({}, {delay: 7 * 1000})
+    const getQueue = await QueueService.getQueue('AUTO_CANCEL')
+    await getQueue.add({}, {delay: 7 * 1000})
+    logger.info('done.')
   }
 }

@@ -1,7 +1,7 @@
 import logger from '@common/logger';
 import QueueService from '@common/queue/queue.service';
 import { Job, DoneCallback, Queue } from 'bull';
-import TicketDetail from '@api/ticketdetail/Td';
+import TicketDetail from '@common/booking/Td';
 
 export class AutoCancelJob {
   static async register(): Promise<Queue> {

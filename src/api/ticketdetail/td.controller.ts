@@ -1,6 +1,6 @@
 import logger from '@common/logger';
 import { Request, Response } from 'express';
-import TicketDetail from './Td';
+import TicketDetail from '@common/booking/Td';
 import eventbus from '@common/eventbus';
 
 export default class ticketDetailController {

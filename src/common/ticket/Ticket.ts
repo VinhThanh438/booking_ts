@@ -1,4 +1,4 @@
-import { ITicket } from './ticket.interface';
+import { ITicket } from './ticket.interface'; 
 import { Schema, model } from 'mongoose';
 
 const ticketSchema = new Schema<ITicket>({
