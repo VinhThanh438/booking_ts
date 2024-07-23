@@ -8,8 +8,8 @@ export default class ticketEvent {
     eventbus.on('BOOKING_CREATED', ticketEvent.bookingCreateHandler);
   }
 
-  public static async bookingCreateHandler(ticketName: unknown): Promise<void> {
-    await Ticket.findOneAndUpdate({ ticketName }, { $inc: { quantity: 1 } });
+  public static async bookingCreateHandler(id: unknown): Promise<void> {
+    await Ticket.findOneAndUpdate({ id }, { $inc: { quantity: 1 } });
     logger.info('Ticket updated');
   }
 }

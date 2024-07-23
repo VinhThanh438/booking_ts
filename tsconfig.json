@@ -22,6 +22,9 @@
       "@config/*": [
         "src/config/*"
       ],
+      "@worker/*": [
+        "src/worker/*"
+      ],
       "*": [
         "node_modules/*"
       ]

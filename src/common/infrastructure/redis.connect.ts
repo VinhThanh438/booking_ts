@@ -15,7 +15,17 @@ export default class redisConnect {
   }
 
   static async connect(overrideClient = true): Promise<Redis> {
-    const tmp = new ioredis(REDIS_URL);
+    const tmp = new ioredis(REDIS_URL, {
+      lazyConnect: true,
+      maxRetriesPerRequest: 10,
+      retryStrategy: (times) => {
+        const delay = Math.min(times * 50, 2000);
+        if (times < 5) {
+          return delay;
+        }
+        process.exit(1);
+      },
+    });
 
     tmp.on('ready', () => {
       logger.info('Connect to redis successfully!');
