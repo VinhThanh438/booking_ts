@@ -13,6 +13,7 @@
     "dev": "nodemon src/index.ts",
     "dev:worker": "nodemon src/index.worker.ts",
     "start": "node ./dist/index.js",
+    "start:worker": "node ./dist/index.worker.js",
     "docker:start": "pm2-docker start ./dist/index.js",
     "docker:start:worker": "pm2-docker start ./dist/index.worker.js"
   },
