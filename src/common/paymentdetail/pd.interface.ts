@@ -1,6 +1,6 @@
 // payment detail interface
 
-export interface IPd {
+export interface IPaymentDetail {
   ticketName: string;
   userName: string;
   total: number;

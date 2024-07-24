@@ -1,19 +1,19 @@
-FROM node:18.18.0-alpine
-
+FROM node:18.18.0-alpine as base
 WORKDIR /app
+ENV PORT=3000
+ENV LOG_LEVEL="debug"
+COPY package*.json ./
+RUN yarn install
+COPY . .
 
-COPY package*.json .
-
-RUN yarn install 
-
-COPY dist /src
-
-COPY entrypoint.sh /entrypoint.sh
-
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT [ "/entrypoint.sh" ]
-
+FROM base as api
+WORKDIR /app
 EXPOSE 3000
+CMD [ "npm", "run", "docker:start" ]
 
-CMD [ "start" ]
+FROM base as worker
+WORKDIR  /app
+CMD ["npm", "run", "docker:start-worker"]
+
+
+

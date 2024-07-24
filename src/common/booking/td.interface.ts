@@ -1,6 +1,6 @@
 // ticket detail interface
 
-export interface ITd {
+export interface ITicketDetail {
   ticketName: string;
   userName: string;
   status: string;

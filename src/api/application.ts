@@ -1,14 +1,14 @@
-import { connectMongoose } from '@common/infrastructure/mongoose.connect';
+import { ConnectMongoose } from '@common/infrastructure/mongoose.connect';
 import ExpressServer from './server';
 import { PORT } from '@config/environment';
-import redisConnect from '@common/infrastructure/redis.connect';
-import ticketEvent from '@common/ticket/ticket.event';
-import ticketDetailEvent from '@common/booking/autocancel.event';
+import { ConnectRedis } from '@common/infrastructure/redis.connect';
+import { TicketEvent } from '@common/ticket/ticket.event';
+import { TicketDetailEvent } from '@common/booking/autocancel.event';
 
 export class Application {
   public static async createApp(): Promise<ExpressServer> {
-    await connectMongoose.connect();
-    await redisConnect.connect();
+    await ConnectMongoose.connect();
+    await ConnectRedis.connect();
 
     this.registerEvent();
 
@@ -19,7 +19,7 @@ export class Application {
   }
 
   public static registerEvent() {
-    ticketEvent.register();
-    ticketDetailEvent.register()
+    TicketEvent.register();
+    TicketDetailEvent.register();
   }
 }

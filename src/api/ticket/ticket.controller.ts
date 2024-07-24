@@ -2,11 +2,11 @@ import logger from '@common/logger';
 import { Request, Response } from 'express';
 import Ticket from '@common/booking/Td';
 
-export default class ticketController {
+export class TicketController {
   static async getALL(req: Request, res: Response): Promise<void> {
     try {
       const data = await Ticket.find({});
-      
+
       res.status(201).json({ data });
     } catch (error) {
       logger.error('can not get tickets');

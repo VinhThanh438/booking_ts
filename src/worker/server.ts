@@ -1,5 +1,5 @@
 import { Queue } from 'bull';
-import Router from './route';
+import { Router } from './route';
 
 export class WorkerServer {
   private queues: Queue[];

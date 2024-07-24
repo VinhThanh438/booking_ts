@@ -1,20 +1,18 @@
-import redisConnect from '@common/infrastructure/redis.connect';
 import logger from '@common/logger';
 import BullQueue, { JobStatusClean, Queue } from 'bull';
-import { error } from 'console';
 
-export default class QueueService {
+export class QueueService {
   private static queues: Map<string, Queue> = new Map<string, Queue>();
 
   static async getQueue<T = unknown>(jobName: string): Promise<Queue<unknown>> {
-    let q = QueueService.queues.get(jobName);
+    let queue = QueueService.queues.get(jobName);
 
-    if (!q) {
-      q = new BullQueue<T>(jobName);
-      q.on('error', (error) => logger.error('can not process queue'));
-      QueueService.queues.set(jobName, q);
+    if (!queue) {
+      queue = new BullQueue<T>(jobName);
+      queue.on('error', (error) => logger.error('can not process queue', error));
+      QueueService.queues.set(jobName, queue);
     }
 
-    return q;
+    return queue;
   }
 }

@@ -2,16 +2,16 @@ import ioredis, { Redis } from 'ioredis';
 import { REDIS_URL } from '@config/environment';
 import logger from '@common/logger';
 
-export default class redisConnect {
+export class ConnectRedis {
   private static client: Redis;
   private static subcriber: Redis;
   private static allClients: Redis[] = [];
 
   static async getClient(): Promise<Redis> {
-    if (!redisConnect.client) {
-      await redisConnect.connect();
+    if (!ConnectRedis.client) {
+      await ConnectRedis.connect();
     }
-    return redisConnect.client;
+    return ConnectRedis.client;
   }
 
   static async connect(overrideClient = true): Promise<Redis> {
@@ -46,10 +46,10 @@ export default class redisConnect {
     }
 
     if (overrideClient) {
-      redisConnect.client = tmp;
+      ConnectRedis.client = tmp;
     }
 
-    redisConnect.allClients.push(tmp);
+    ConnectRedis.allClients.push(tmp);
 
     return tmp;
   }
@@ -68,7 +68,7 @@ export default class redisConnect {
       logger.error('Connect to redis error!', error);
     });
 
-    redisConnect.allClients.push(tmp);
+    ConnectRedis.allClients.push(tmp);
 
     return tmp;
   }
@@ -88,15 +88,15 @@ export default class redisConnect {
   }
 
   static async get(key: string, shouldDeserialize = false): Promise<unknown> {
-    const value = await (await redisConnect.getClient()).get(key);
-    return shouldDeserialize ? redisConnect.deserialize(value) : value;
+    const value = await (await ConnectRedis.getClient()).get(key);
+    return shouldDeserialize ? ConnectRedis.deserialize(value) : value;
   }
 
   static async set(key: string, value: unknown, ttl = 0, shouldSerialize = false): Promise<unknown> {
-    const stringValue: string = shouldSerialize ? redisConnect.serialize(value) : (value as string);
+    const stringValue: string = shouldSerialize ? ConnectRedis.serialize(value) : (value as string);
     if (ttl > 0) {
-      return (await redisConnect.getClient()).set(key, stringValue, 'EX', ttl);
+      return (await ConnectRedis.getClient()).set(key, stringValue, 'EX', ttl);
     }
-    return (await redisConnect.getClient()).set(key, stringValue);
+    return (await ConnectRedis.getClient()).set(key, stringValue);
   }
 }

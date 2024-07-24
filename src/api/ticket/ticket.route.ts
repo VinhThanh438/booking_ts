@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express';
-import ticketController from './ticket.controller';
+import { TicketController } from './ticket.controller';
 
-const ticketRoute = express.Router();
+const router = express.Router();
 
-ticketRoute.get('/', ticketController.getALL);
+router.get('/', TicketController.getALL);
 
-ticketRoute.post('/', ticketController.addTicket);
+router.post('/', TicketController.addTicket);
 
-export default ticketRoute;
+export default router;
