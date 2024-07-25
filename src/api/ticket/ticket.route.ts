@@ -3,7 +3,7 @@ import { TicketController } from './ticket.controller';
 
 const router = express.Router();
 
-router.get('/price/:option/:page', TicketController.PanigateByPrice); 
+router.get('/:field/:option/:page', TicketController.panigate); 
 
 router.get('/:page', TicketController.getALL);
 

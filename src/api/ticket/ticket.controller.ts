@@ -25,10 +25,11 @@ export class TicketController {
     }
   }
 
-  static async PanigateByPrice(req: Request, res: Response): Promise<void> {
+  static async panigate(req: Request, res: Response): Promise<void> {
     try {
       const currentPage: number = parseInt(req.params.page)
       const option = req.params.option
+      const field = req.params.field
       let num: SortOrder = 1 // asc
       let ticketsPerPage  = 4
 
@@ -36,7 +37,7 @@ export class TicketController {
 
       const data = await Ticket
       .find()
-      .sort({ price: num }) 
+      .sort({ field: num }) 
       .skip((ticketsPerPage * currentPage) - ticketsPerPage)
       .limit(ticketsPerPage)
 
@@ -60,7 +61,7 @@ export class TicketController {
 
       res.status(StatusCode.CREATED).json({ message: 'created' });
     } catch (error) {
-      logger.error('can not get tickets');
+      logger.error('can not add tickets');
     }
   }
 }
