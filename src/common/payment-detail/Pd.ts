@@ -1,14 +1,46 @@
+import { ITimestamp } from '@common/timestamp.interface';
 import { Schema, model } from 'mongoose';
-import { IPaymentDetail } from './pd.interface';
+
+export interface IPaymentDetailReponse {
+  pd_id: string,
+  ticket_name: string,
+  user_name: string,
+  total: number,
+}
+
+export interface IPaymentDetail extends Document, ITimestamp {
+  _id: Schema.Types.ObjectId;
+  ticket_name: string;
+  user_name: string;
+  total: number;
+
+  transform(): IPaymentDetailReponse
+}
 
 const pdSchema = new Schema<IPaymentDetail>({
-  pd_id: { type: Schema.Types.ObjectId, auto: true},
   ticket_name: { type: String, required: true, default: null },
   user_name: { type: String, required: true, default: null },
   total: { type: Number, required: true, defaul: null },
-  confirmation_time: { type: Date, required: true, default: Date() },
+},
+{
+  timestamps: {
+    createdAt: 'create_at',
+    updatedAt: 'update_at'
+  }
 });
 
-const PaymentDetail = model<IPaymentDetail>('PaymentDetail', pdSchema);
+pdSchema.method({
 
-export default PaymentDetail;
+  transform(): IPaymentDetailReponse {
+    const transformed: IPaymentDetailReponse = {
+      pd_id: this._id.toHexString(),
+      ticket_name: this.ticket_name,
+      user_name: this.user_name,
+      total: this.total
+    }
+
+    return transformed
+  }
+})
+
+export default model<IPaymentDetail>('PaymentDetail', pdSchema);

@@ -11,6 +11,7 @@ export class TicketEvent {
 
   public static async bookingCreatedHandler(id: number): Promise<void> {
     try {
+      logger.info('TicketEvent.bookingCreatedHandler with id', id);
       await Ticket.findOneAndUpdate({ id }, { $inc: { quantity: 1 } });
       logger.info('Ticket updated');
     } catch (error) {

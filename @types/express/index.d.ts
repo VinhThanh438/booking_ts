@@ -3,6 +3,7 @@ declare global {
     namespace Express {
         interface Request {
             user?: unknown;
+            // auth?: IAuthUser;
             rawBody: Buffer;
         }
 

@@ -1,14 +1,37 @@
-import { Schema, model, ObjectId } from 'mongoose';
-import { IUser } from './user.interface';
+import { Schema, model } from 'mongoose';
+
+export interface IUserResponse {
+  user_id: string,
+  user_name: string,
+  balance: number,
+}
+
+export interface IUser extends Document {
+  _id: Schema.Types.ObjectId
+  user_name: string;
+  password: string;
+  balance: number;
+
+  transform(): IUserResponse
+}
 
 const UserSchema = new Schema<IUser>({
-  user_id: { type: Schema.Types.ObjectId, auto: true},
-  name: { type: String, require: true, default: null },
+  user_name: { type: String, require: true, default: null },
   password: { type: String, require: true, default: null },
   balance: { type: Number, require: true, default: 120000 },
-  create_at: { type: Date, required: true, default: Date() },
 });
 
-const User = model<IUser>('User', UserSchema);
+UserSchema.method({
 
-export default User;
+  transform(): IUserResponse {
+    const transformed: IUserResponse = {
+      user_id: this._id.toHexString(),
+      user_name: this.user_name,
+      balance: this.balance
+    }
+
+    return transformed
+  }
+})
+
+export default model<IUser>('User', UserSchema);

@@ -13,7 +13,6 @@ export class TicketDetailEvent {
     try {
       const getQueue = await QueueService.getQueue(AUTO_CANCEL);
       await getQueue.add({}, { delay: 7 * 1000 }); // 7 seconds
-      logger.info('done')
     } catch (error) {
       logger.error(error)
     }
