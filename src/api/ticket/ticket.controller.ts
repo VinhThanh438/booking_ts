@@ -35,8 +35,8 @@ export class TicketController {
       
       if (option == 'desc') num = -1 //desc
 
-      let sortOption:any = { price: num }
-      if (field == 'quantity') sortOption =  { quantity: num }
+      let sortOption:any = { price: num } // sort by price 
+      if (field == 'quantity') sortOption =  { quantity: num } // sort by quantity
 
       const data = await Ticket
       .find()
@@ -65,6 +65,7 @@ export class TicketController {
       res.status(StatusCode.CREATED).json({ message: 'created' });
     } catch (error) {
       logger.error('can not add tickets', error);
+      res.status(StatusCode.REQUEST_FORBIDDEN).json({message: 'can not add tickets'})
     }
   }
 }
