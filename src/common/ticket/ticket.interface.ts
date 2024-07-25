@@ -1,5 +1,5 @@
 export interface ITicket {
-  ticketName: string;
+  ticket_name: string;
   price: number;
   quantity: number;
 }

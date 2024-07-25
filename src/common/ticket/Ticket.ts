@@ -2,9 +2,9 @@ import { ITicket } from './ticket.interface';
 import { Schema, model } from 'mongoose';
 
 const TicketSchema = new Schema<ITicket>({
-  ticketName: { type: String, require: true },
-  price: { type: Number, require: true },
-  quantity: { type: Number, require: true },
+  ticket_name: { type: String, require: true, default: null },
+  price: { type: Number, require: true, default: null },
+  quantity: { type: Number, require: true, default: null },
 });
 
 const Ticket = model<ITicket>('Ticket', TicketSchema);

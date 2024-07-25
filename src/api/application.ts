@@ -1,5 +1,5 @@
 import { ConnectMongoose } from '@common/infrastructure/mongoose.connect';
-import ExpressServer from './server';
+import { ExpressServer } from './server';
 import { PORT } from '@config/environment';
 import { ConnectRedis } from '@common/infrastructure/redis.connect';
 import { TicketEvent } from '@common/ticket/ticket.event';

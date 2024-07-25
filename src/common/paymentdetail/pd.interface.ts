@@ -1,8 +1,8 @@
 // payment detail interface
 
 export interface IPaymentDetail {
-  ticketName: string;
-  userName: string;
+  ticket_name: string;
+  user_name: string;
   total: number;
   confirmation_time: any;
 }

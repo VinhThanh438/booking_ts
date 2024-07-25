@@ -3,7 +3,7 @@ import express, { Express } from 'express';
 import { Server } from 'http';
 import bodyParser from 'body-parser';
 
-export default class ExpressServer {
+export class ExpressServer {
   private server?: Express;
   private httpServer: Server;
 

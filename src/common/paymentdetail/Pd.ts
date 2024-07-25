@@ -2,9 +2,9 @@ import { Schema, model } from 'mongoose';
 import { IPaymentDetail } from './pd.interface';
 
 const pdSchema = new Schema<IPaymentDetail>({
-  ticketName: { type: String, required: true },
-  userName: { type: String, required: true },
-  total: { type: Number, required: true },
+  ticket_name: { type: String, required: true, default: null },
+  user_name: { type: String, required: true, default: null },
+  total: { type: Number, required: true, defaul: null },
   confirmation_time: { type: Date, required: true, default: Date() },
 });
 

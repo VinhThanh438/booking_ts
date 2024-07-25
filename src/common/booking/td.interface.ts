@@ -1,8 +1,8 @@
 // ticket detail interface
 
 export interface ITicketDetail {
-  ticketName: string;
-  userName: string;
+  ticket_name: string;
+  user_name: string;
   status: string;
-  bookingTime: any;
+  booking_time: any;
 }
