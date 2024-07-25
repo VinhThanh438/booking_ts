@@ -1,3 +1,3 @@
-export const AUTO_CANCEL: string = 'auto-cancel';
+export const AUTO_CANCEL = 'auto-cancel';
 
-export const DEDUCT_USER_MONEY: string = 'deduct-user-money'
+export const DEDUCT_USER_MONEY = 'deduct-user-money'

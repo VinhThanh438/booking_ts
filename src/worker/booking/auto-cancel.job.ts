@@ -10,7 +10,6 @@ export class AutoCancelJob {
 
     const queue = await QueueService.getQueue<unknown>(AUTO_CANCEL);
 
-    
     await queue.clean(5000, 'delayed');
     await queue.process(AutoCancelJob.handler);
 
