@@ -30,14 +30,17 @@ export class TicketController {
       const currentPage: number = parseInt(req.params.page)
       const option = req.params.option
       const field = req.params.field
-      let num: SortOrder = 1 // asc
       let ticketsPerPage  = 4
-
+      let num: SortOrder = 1 // asc
+      
       if (option == 'desc') num = -1 //desc
+
+      let sortOption:any = { price: num }
+      if (field == 'quantity') sortOption =  { quantity: num }
 
       const data = await Ticket
       .find()
-      .sort({ field: num }) 
+      .sort(sortOption) 
       .skip((ticketsPerPage * currentPage) - ticketsPerPage)
       .limit(ticketsPerPage)
 
@@ -61,7 +64,7 @@ export class TicketController {
 
       res.status(StatusCode.CREATED).json({ message: 'created' });
     } catch (error) {
-      logger.error('can not add tickets');
+      logger.error('can not add tickets', error);
     }
   }
 }
