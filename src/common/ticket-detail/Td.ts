@@ -1,7 +1,8 @@
 import { ITicketDetail } from './td.interface';
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
 const TdSchema = new Schema<ITicketDetail>({
+  td_id: { type: Schema.Types.ObjectId, auto: true },
   ticket_name: { type: String, require: true, default: null },
   user_name: { type: String, require: true, default: null },
   status: { type: String, require: true, default: 'booked' },
@@ -11,3 +12,4 @@ const TdSchema = new Schema<ITicketDetail>({
 const TicketDetail = model<ITicketDetail>('TicketDetail', TdSchema);
 
 export default TicketDetail;
+

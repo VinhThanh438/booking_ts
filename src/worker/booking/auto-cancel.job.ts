@@ -1,16 +1,17 @@
 import logger from '@common/logger';
 import { QueueService } from '@common/queue/queue.service';
 import { Job, DoneCallback, Queue } from 'bull';
-import TicketDetail from '@common/booking/Td';
+import TicketDetail from '@common/ticket-detail/Td';
+import { AUTO_CANCEL } from '@common/constant/jobname.constant';
 
 export class AutoCancelJob {
   static async register(): Promise<Queue> {
-    const jobName: string = 'AUTO_CANCEL';
-    logger.info(`processing queue ${jobName}`);
+    logger.info(`processing queue ${AUTO_CANCEL}`);
 
-    const queue = await QueueService.getQueue<unknown>(jobName);
+    const queue = await QueueService.getQueue<unknown>(AUTO_CANCEL);
 
-    await queue.clean(7000, 'delayed');
+    
+    await queue.clean(5000, 'delayed');
     await queue.process(AutoCancelJob.handler);
 
     return queue;

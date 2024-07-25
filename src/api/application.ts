@@ -3,7 +3,7 @@ import { ExpressServer } from './server';
 import { PORT } from '@config/environment';
 import { ConnectRedis } from '@common/infrastructure/redis.connect';
 import { TicketEvent } from '@common/ticket/ticket.event';
-import { TicketDetailEvent } from '@common/booking/autocancel.event';
+import { TicketDetailEvent } from '@common/ticket-detail/ticket-detail.event';
 
 export class Application {
   public static async createApp(): Promise<ExpressServer> {

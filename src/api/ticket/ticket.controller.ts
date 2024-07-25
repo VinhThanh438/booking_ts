@@ -1,6 +1,6 @@
 import logger from '@common/logger';
 import { Request, Response } from 'express';
-import Ticket from '@common/booking/Td';
+import Ticket from '@common/ticket-detail/Td';
 
 export class TicketController {
   static async getALL(req: Request, res: Response): Promise<void> {
@@ -16,7 +16,11 @@ export class TicketController {
   static async addTicket(req: Request, res: Response): Promise<void> {
     try {
       const { ticketName, price, quantity } = req.body;
-      const ticket = new Ticket({ ticketName, price, quantity });
+      
+      const ticket = new Ticket({ 
+        ticket_name: ticketName, 
+        price, 
+        quantity });
 
       await ticket.save();
 
