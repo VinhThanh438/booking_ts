@@ -1,6 +1,6 @@
 import logger from '@common/logger';
 import { Request, Response } from 'express';
-import TicketDetail from '@common/ticket-detail/Td';
+import TicketDetail from '@common/ticket-detail/Ticket-detail';
 import eventbus from '@common/eventbus';
 import { EVENT_BOOKING_CREATED } from '@common/constant/event.constant';
 import { StatusCode } from '@config/status-code';

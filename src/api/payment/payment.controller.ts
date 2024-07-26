@@ -17,30 +17,10 @@ export class PaymentController {
           total,
         }),
       );
-      // const data = new PaymentDetail({
-      //   ticket_name: ticketName,
-      //   user_name: userName,
-      //   total
-      // });
-
-      // await data.save();
-      // const auth = req.auth;
-
-      // paerformance
-      // await PaymentDetail.findOneAndUpdate({
-      //   ticket_name: ticketName,
-      //   user_name: userName,
-      // }, {
-      //   total
-      // }, {
-      //   new:
-      //   true,
-      //   upsert: true
-      // })
 
       eventbus.emit(EVENT_PAYMENT_CREATED, { userName, total });
 
-      res.status(StatusCode.CREATED).json({ message: 'payment success!' });
+      res.status(StatusCode.CREATED).json({ message: 'payment success!', data });
     } catch (error) {
       logger.error('payment could not be confirmed!', error);
       res.status(StatusCode.REQUEST_FORBIDDEN).json({ message: 'payment could not be confirmed!' });

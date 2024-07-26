@@ -5,6 +5,7 @@ import { IToken } from './token.interface';
 
 export class Token {
   public static async getToken(data: IUserResponse): Promise<IToken> {
+    
     const accessToken = await Token.accessToken(data);
     const refreshToken = await Token.refreshToken(data);
 

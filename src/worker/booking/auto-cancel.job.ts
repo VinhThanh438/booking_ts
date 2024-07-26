@@ -1,7 +1,7 @@
 import logger from '@common/logger';
 import { QueueService } from '@common/queue/queue.service';
 import { Job, DoneCallback, Queue } from 'bull';
-import TicketDetail from '@common/ticket-detail/Td';
+import TicketDetail from '@common/ticket-detail/Ticket-detail';
 import { AUTO_CANCEL } from '@common/constant/jobname.constant';
 
 export class AutoCancelJob {
