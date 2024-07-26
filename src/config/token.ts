@@ -5,7 +5,7 @@ import { IToken } from './token.interface';
 
 export class Token {
   public static async getToken(data: IUserResponse): Promise<IToken> {
-    
+
     const accessToken = await Token.accessToken(data);
     const refreshToken = await Token.refreshToken(data);
 
@@ -15,7 +15,7 @@ export class Token {
     };
   }
 
-  static async accessToken(data) {
+  public static async accessToken(data) {
     return jwt.sign(
       {
         user_id: data.user_id,
@@ -29,7 +29,7 @@ export class Token {
     );
   }
 
-  static async refreshToken(data) {
+  public static async refreshToken(data) {
     return jwt.sign(
       {
         user_id: data.user_id,
@@ -43,3 +43,10 @@ export class Token {
     );
   }
 }
+
+export const isTokenExpried = (token) => {
+    const decodeToken = jwt.decode(token);
+    const expirationTime = decodeToken.exp * 1000;
+    const currentTime = Date.now().valueOf() / 1000;
+    return expirationTime > currentTime;
+};
