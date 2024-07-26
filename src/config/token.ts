@@ -1,0 +1,44 @@
+import { IUserResponse } from '@common/user/User';
+import jwt from 'jsonwebtoken';
+import { ACCESSTOKEN_KEY, REFRESHTOKEN_KEY } from './environment';
+import { IToken } from './token.interface';
+
+export class Token {
+  public static async getToken(data: IUserResponse): Promise<IToken> {
+    const accessToken = await Token.accessToken(data);
+    const refreshToken = await Token.refreshToken(data);
+
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  static async accessToken(data) {
+    return jwt.sign(
+      {
+        user_id: data.user_id,
+        user_name: data.user_name,
+        balance: data.balance,
+      },
+      ACCESSTOKEN_KEY,
+      {
+        expiresIn: '60s',
+      },
+    );
+  }
+
+  static async refreshToken(data) {
+    return jwt.sign(
+      {
+        user_id: data.user_id,
+        user_name: data.user_name,
+        balance: data.balance,
+      },
+      REFRESHTOKEN_KEY,
+      {
+        expiresIn: '1d',
+      },
+    );
+  }
+}

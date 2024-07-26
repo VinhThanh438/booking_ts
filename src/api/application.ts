@@ -4,6 +4,7 @@ import { PORT } from '@config/environment';
 import { ConnectRedis } from '@common/infrastructure/redis.connect';
 import { TicketEvent } from '@common/ticket/ticket.event';
 import { TicketDetailEvent } from '@common/ticket-detail/ticket-detail.event';
+import { UserEvent } from '@common/user/user.event';
 
 export class Application {
   public static async createApp(): Promise<ExpressServer> {
@@ -21,5 +22,6 @@ export class Application {
   public static registerEvent() {
     TicketEvent.register();
     TicketDetailEvent.register();
+    UserEvent.register();
   }
 }

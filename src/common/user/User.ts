@@ -1,18 +1,18 @@
 import { Schema, model } from 'mongoose';
 
 export interface IUserResponse {
-  user_id: string,
-  user_name: string,
-  balance: number,
+  user_id: string;
+  user_name: string;
+  balance: number;
 }
 
 export interface IUser extends Document {
-  _id: Schema.Types.ObjectId
+  _id: Schema.Types.ObjectId;
   user_name: string;
   password: string;
   balance: number;
 
-  transform(): IUserResponse
+  transform(): IUserResponse;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -22,16 +22,15 @@ const UserSchema = new Schema<IUser>({
 });
 
 UserSchema.method({
-
   transform(): IUserResponse {
     const transformed: IUserResponse = {
       user_id: this._id.toHexString(),
       user_name: this.user_name,
-      balance: this.balance
-    }
+      balance: this.balance,
+    };
 
-    return transformed
-  }
-})
+    return transformed;
+  },
+});
 
 export default model<IUser>('User', UserSchema);

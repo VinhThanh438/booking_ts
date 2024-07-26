@@ -15,7 +15,7 @@ export class TicketEvent {
       await Ticket.findOneAndUpdate({ id }, { $inc: { quantity: 1 } });
       logger.info('Ticket updated');
     } catch (error) {
-      logger.error(error)
+      logger.error(error);
     }
   }
 }

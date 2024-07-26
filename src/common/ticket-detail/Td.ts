@@ -2,10 +2,10 @@ import { ITimestamp } from '@common/timestamp.interface';
 import mongoose, { Schema, model } from 'mongoose';
 
 export interface ITicketDetailReponse {
-  td_id: string,
-  ticket_name: string,
-  user_name: string,
-  status: string,
+  td_id: string;
+  ticket_name: string;
+  user_name: string;
+  status: string;
 }
 
 export interface ITicketDetail extends Document, ITimestamp {
@@ -14,20 +14,22 @@ export interface ITicketDetail extends Document, ITimestamp {
   user_name: string;
   status: string;
 
-  transform(): ITicketDetailReponse
+  transform(): ITicketDetailReponse;
 }
 
-const TdSchema = new Schema<ITicketDetail>({
-  ticket_name: { type: String, require: true, default: null },
-  user_name: { type: String, require: true, default: null },
-  status: { type: String, require: true, default: 'booked' },
-}, 
-{
-  timestamps: {
-    createdAt: 'create_at',
-    updatedAt: 'update_at'
-  }
-});
+const TdSchema = new Schema<ITicketDetail>(
+  {
+    ticket_name: { type: String, require: true, default: null },
+    user_name: { type: String, require: true, default: null },
+    status: { type: String, require: true, default: 'booked' },
+  },
+  {
+    timestamps: {
+      createdAt: 'create_at',
+      updatedAt: 'update_at',
+    },
+  },
+);
 
 TdSchema.method({
   transform(): ITicketDetailReponse {
@@ -35,12 +37,11 @@ TdSchema.method({
       td_id: this._id.toHexString(),
       ticket_name: this.ticket_name,
       user_name: this.user_name,
-      status: this.status
-    }
+      status: this.status,
+    };
 
-    return transformed
-  }
-})
+    return transformed;
+  },
+});
 
 export default model<ITicketDetail>('TicketDetail', TdSchema);
-

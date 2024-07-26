@@ -1,4 +1,4 @@
 export interface ITimestamp {
-    create_at: Date,
-    update_at: Date 
+  create_at: Date;
+  update_at: Date;
 }

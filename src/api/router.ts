@@ -1,13 +1,14 @@
 import ticketRoute from './ticket/ticket.route';
 import tdRoute from './ticketdetail/td.route';
-import paymentRoute from './payment/payment.route'
+import userRoute from './user/user.route';
+import paymentRoute from './payment/payment.route';
 import express from 'express';
 const router = express.Router();
 
-router.use('/', ticketRoute);
+router.use('/', ticketRoute, userRoute);
 
 router.use('/booking', tdRoute);
 
-router.use('/payment', paymentRoute)
+router.use('/payment', paymentRoute);
 
 export default router;
