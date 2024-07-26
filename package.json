@@ -17,6 +17,7 @@
     "docker:start": "pm2-docker start ./dist/index.js",
     "docker:start-worker": "pm2-docker start ./dist/index.worker.js"
   },
+  "docker:start-worker": "pm2-docker start ./dist/index.worker.js",
   "devDependencies": {
     "@types/dotenv-safe": "^8.1.1",
     "@types/express": "^4.17.21",

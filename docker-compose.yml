@@ -23,18 +23,37 @@ services:
         - common
     restart: always
 
-  bitubooking:
-    image: bitubooking
+  booking-api:
+    image: booking-api
     build:
       context: .
+      target: api
       dockerfile: ./Dockerfile
     depends_on:
       - mongo
       - redis
     environment:
-      NODE_ENV: production
+      - MONGO_URL=mongodb://localhost:27018/admin
+      - REDIS_URL=redis://localhost:6378
+    networks:
+        - common
     ports:
       - 3000:3000
+
+  booking-worker:
+    image: booking-worker
+    build:
+      context: .
+      target: worker
+      dockerfile: ./Dockerfile
+    environment:
+      - MONGO_URL=mongodb://localhost:27018/admin
+      - REDIS_URL=redis://localhost:6378
+    networks:
+        - common
+    depends_on:
+      - mongo
+      - redis
 
 networks:
     common:
