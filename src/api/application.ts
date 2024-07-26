@@ -7,21 +7,21 @@ import { TicketDetailEvent } from '@common/ticket-detail/ticket-detail.event';
 import { UserEvent } from '@common/user/user.event';
 
 export class Application {
-  public static async createApp(): Promise<ExpressServer> {
-    await ConnectMongoose.connect();
-    await ConnectRedis.connect();
+    public static async createApp(): Promise<ExpressServer> {
+        await ConnectMongoose.connect();
+        await ConnectRedis.connect();
 
-    this.registerEvent();
+        this.registerEvent();
 
-    const expressServer = new ExpressServer();
-    expressServer.setup(PORT);
+        const expressServer = new ExpressServer();
+        expressServer.setup(PORT);
 
-    return expressServer;
-  }
+        return expressServer;
+    }
 
-  public static registerEvent() {
-    TicketEvent.register();
-    TicketDetailEvent.register();
-    UserEvent.register();
-  }
+    public static registerEvent() {
+        TicketEvent.register();
+        TicketDetailEvent.register();
+        UserEvent.register();
+    }
 }

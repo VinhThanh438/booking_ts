@@ -2,14 +2,14 @@ import { Queue } from 'bull';
 import { Router } from './route';
 
 export class WorkerServer {
-  private queues: Queue[];
+    private queues: Queue[];
 
-  public async setup(): Promise<void> {
-    await this.registerQueues();
-    return;
-  }
+    public async setup(): Promise<void> {
+        await this.registerQueues();
+        return;
+    }
 
-  private async registerQueues(): Promise<void> {
-    this.queues = await Router.register();
-  }
+    private async registerQueues(): Promise<void> {
+        this.queues = await Router.register();
+    }
 }

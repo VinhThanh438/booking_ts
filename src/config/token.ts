@@ -4,44 +4,43 @@ import { ACCESSTOKEN_KEY, REFRESHTOKEN_KEY } from './environment';
 import { IToken } from './token.interface';
 
 export class Token {
-  public static async getToken(data: IUserResponse): Promise<IToken> {
+    public static async getToken(data: IUserResponse): Promise<IToken> {
+        const accessToken = await Token.accessToken(data);
+        const refreshToken = await Token.refreshToken(data);
 
-    const accessToken = await Token.accessToken(data);
-    const refreshToken = await Token.refreshToken(data);
+        return {
+            accessToken,
+            refreshToken,
+        };
+    }
 
-    return {
-      accessToken,
-      refreshToken,
-    };
-  }
+    public static async accessToken(data) {
+        return jwt.sign(
+            {
+                user_id: data.user_id,
+                user_name: data.user_name,
+                balance: data.balance,
+            },
+            ACCESSTOKEN_KEY,
+            {
+                expiresIn: '60s',
+            },
+        );
+    }
 
-  public static async accessToken(data) {
-    return jwt.sign(
-      {
-        user_id: data.user_id,
-        user_name: data.user_name,
-        balance: data.balance,
-      },
-      ACCESSTOKEN_KEY,
-      {
-        expiresIn: '60s',
-      },
-    );
-  }
-
-  public static async refreshToken(data) {
-    return jwt.sign(
-      {
-        user_id: data.user_id,
-        user_name: data.user_name,
-        balance: data.balance,
-      },
-      REFRESHTOKEN_KEY,
-      {
-        expiresIn: '1d',
-      },
-    );
-  }
+    public static async refreshToken(data) {
+        return jwt.sign(
+            {
+                user_id: data.user_id,
+                user_name: data.user_name,
+                balance: data.balance,
+            },
+            REFRESHTOKEN_KEY,
+            {
+                expiresIn: '1d',
+            },
+        );
+    }
 }
 
 export const isTokenExpried = (token) => {

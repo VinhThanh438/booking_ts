@@ -5,16 +5,16 @@ import logger from '@common/logger';
 import { QueueService } from '@common/queue/queue.service';
 
 export class TicketDetailEvent {
-  public static register() {
-    eventbus.on(EVENT_BOOKING_CREATED, TicketDetailEvent.handler);
-  }
-
-  public static async handler(): Promise<void> {
-    try {
-      const getQueue = await QueueService.getQueue(AUTO_CANCEL);
-      await getQueue.add({}, { delay: 7 * 1000 }); // 7 seconds
-    } catch (error) {
-      logger.error(error);
+    public static register() {
+        eventbus.on(EVENT_BOOKING_CREATED, TicketDetailEvent.handler);
     }
-  }
+
+    public static async handler(): Promise<void> {
+        try {
+            const getQueue = await QueueService.getQueue(AUTO_CANCEL);
+            await getQueue.add({}, { delay: 7 * 1000 }); // 7 seconds
+        } catch (error) {
+            logger.error(error);
+        }
+    }
 }

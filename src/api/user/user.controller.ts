@@ -9,62 +9,62 @@ import eventbus from '@common/eventbus';
 import { EVENT_USER_LOGIN } from '@common/constant/event.constant';
 
 export class UserController {
-  static async register(req: Request, res: Response): Promise<void> {
-    try {
-      const { userName, password } = req.body;
+    static async register(req: Request, res: Response): Promise<void> {
+        try {
+            const { userName, password } = req.body;
 
-      const existedUser = await User.findOne({ user_name: userName });
+            const existedUser = await User.findOne({ user_name: userName });
 
-      if (existedUser) {
-        res.status(StatusCode.AUTH_ACCOUNT_EXISTS).json({ message: 'user name existed!' });
-      } else {
-        const salt = await bcrypt.genSalt(10);
-        const hashed = await bcrypt.hash(password, salt);
+            if (existedUser) {
+                res.status(StatusCode.AUTH_ACCOUNT_EXISTS).json({ message: 'user name existed!' });
+            } else {
+                const salt = await bcrypt.genSalt(10);
+                const hashed = await bcrypt.hash(password, salt);
 
-        await User.create(
-          new User({
-            user_name: userName,
-            password: hashed,
-          }),
-        );
+                await User.create(
+                    new User({
+                        user_name: userName,
+                        password: hashed,
+                    }),
+                );
 
-        res.status(StatusCode.CREATED).json({ message: 'registed successfully! ' });
-      }
-    } catch (error) {
-      logger.error(error);
-      res.status(StatusCode.REQUEST_FORBIDDEN).json({ message: 'cannot register', error });
+                res.status(StatusCode.CREATED).json({ message: 'registed successfully! ' });
+            }
+        } catch (error) {
+            logger.error(error);
+            res.status(StatusCode.REQUEST_FORBIDDEN).json({ message: 'cannot register', error });
+        }
     }
-  }
 
-  static async logIn(req: Request, res: Response): Promise<void> {
-    try {
-      const { userName, password } = req.body;
+    static async logIn(req: Request, res: Response): Promise<void> {
+        try {
+            const { userName, password } = req.body;
 
-      const userData = await User.findOne({ user_name: userName });
+            const userData = await User.findOne({ user_name: userName });
 
-      // check user name
-      if (!userData) res.status(StatusCode.AUTH_ACCOUNT_NOT_FOUND).json({ message: 'user not found ' });
+            // check user name
+            if (!userData) res.status(StatusCode.AUTH_ACCOUNT_NOT_FOUND).json({ message: 'user not found ' });
 
-      // compare password
-      const result = await bcrypt.compare(password, userData.password);
+            // compare password
+            const result = await bcrypt.compare(password, userData.password);
 
-      if (!result) res.status(StatusCode.VERIFY_FAILED).json({ message: 'password incorrect!' });
+            if (!result) res.status(StatusCode.VERIFY_FAILED).json({ message: 'password incorrect!' });
 
-      // set token
-      const token = await Token.getToken(userData.transform());
+            // set token
+            const token = await Token.getToken(userData.transform());
 
-      // store refresh token in redis
-      eventbus.emit(EVENT_USER_LOGIN, {
-        userId: userData._id,
-        refreshToken: token.refreshToken,
-      });
+            // store refresh token in redis
+            eventbus.emit(EVENT_USER_LOGIN, {
+                userId: userData._id,
+                refreshToken: token.refreshToken,
+            });
 
-      res.status(StatusCode.OK).json({
-        message: 'login successfully!',
-        accessToken: token.accessToken,
-      });
-    } catch (error) {
-      res.status(StatusCode.REQUEST_UNAUTHORIZED).json({ message: 'cannot register', error });
+            res.status(StatusCode.OK).json({
+                message: 'login successfully!',
+                accessToken: token.accessToken,
+            });
+        } catch (error) {
+            res.status(StatusCode.REQUEST_UNAUTHORIZED).json({ message: 'cannot register', error });
+        }
     }
-  }
 }
