@@ -33,10 +33,13 @@ services:
       - mongo
       - redis
     environment:
-      - MONGO_URL=mongodb://localhost:27018/admin
-      - REDIS_URL=redis://localhost:6378
+      - MONGO_URL=${MONGO_URL}
+      - REDIS_URL=${REDIS_URL}
+      - LOG_LEVEL=${LOG_LEVEL}
+    env_file:
+      - .env
     networks:
-        - common
+      - common
     ports:
       - 3000:3000
 
@@ -47,16 +50,20 @@ services:
       target: worker
       dockerfile: ./Dockerfile
     environment:
-      - MONGO_URL=mongodb://localhost:27018/admin
-      - REDIS_URL=redis://localhost:6378
+      - MONGO_URL=${MONGO_URL}
+      - REDIS_URL=${REDIS_URL}
+      - LOG_LEVEL=${LOG_LEVEL}
+    env_file:
+      - .env
     networks:
-        - common
+      - common
     depends_on:
       - mongo
       - redis
 
 networks:
     common:
+      driver: bridge
 
 volumes:
     mongo-data:

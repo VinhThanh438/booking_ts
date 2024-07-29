@@ -35,13 +35,13 @@ export class ConnectRedis {
         });
 
         tmp.on('error', (error) => {
-            logger.error('Connect to redis error!', error);
+            logger.error('Can not connect to redis', error);
         });
 
         try {
             await tmp.connect();
         } catch (error) {
-            logger.error('Connect to redis error!', error);
+            logger.error('Can not connect to redis', error);
             process.exit(1);
         }
 
@@ -65,7 +65,7 @@ export class ConnectRedis {
         });
 
         tmp.on('error', (error) => {
-            logger.error('Connect to redis error!', error);
+            logger.error('Can not connect to redis!', error);
         });
 
         ConnectRedis.allClients.push(tmp);
