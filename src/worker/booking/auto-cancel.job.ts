@@ -1,7 +1,7 @@
 import logger from '@common/logger';
 import { QueueService } from '@common/queue/queue.service';
 import { Job, DoneCallback, Queue } from 'bull';
-import TicketDetail from '@common/ticket-detail/Ticket-detail';
+import TicketDetail, { StatusConstant } from '@common/ticket-detail/Ticket-detail';
 import { AUTO_CANCEL } from '@common/constant/jobname.constant';
 
 export class AutoCancelJob {
@@ -18,7 +18,7 @@ export class AutoCancelJob {
 
     static async handler(job: Job<unknown>, done: DoneCallback): Promise<void> {
         try {
-            await TicketDetail.findOneAndDelete({ status: 'booked' });
+            await TicketDetail.findOneAndDelete({ status: StatusConstant.booked });
             logger.info('Booking has canceled!');
             done();
         } catch (error) {

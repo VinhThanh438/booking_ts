@@ -1,6 +1,10 @@
 import { ITimestamp } from '@common/timestamp.interface';
 import mongoose, { Schema, model } from 'mongoose';
 
+export enum StatusConstant {
+    booked = 'booked'
+}
+
 export interface ITicketDetailReponse {
     td_id: string;
     ticket_name: string;
@@ -21,7 +25,7 @@ const TicketDetailSchema = new Schema<ITicketDetail>(
     {
         ticket_name: { type: String, require: true },
         user_name: { type: String, require: true },
-        status: { type: String, require: true, default: 'booked' },
+        status: StatusConstant.booked
     },
     {
         timestamps: {
