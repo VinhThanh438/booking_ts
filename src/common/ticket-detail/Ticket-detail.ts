@@ -17,7 +17,7 @@ export interface ITicketDetail extends Document, ITimestamp {
     transform(): ITicketDetailReponse;
 }
 
-const TdSchema = new Schema<ITicketDetail>(
+const TicketDetailSchema = new Schema<ITicketDetail>(
     {
         ticket_name: { type: String, require: true },
         user_name: { type: String, require: true },
@@ -31,7 +31,7 @@ const TdSchema = new Schema<ITicketDetail>(
     },
 );
 
-TdSchema.method({
+TicketDetailSchema.method({
     transform(): ITicketDetailReponse {
         const transformed: ITicketDetailReponse = {
             td_id: this._id.toHexString(),
@@ -44,4 +44,4 @@ TdSchema.method({
     },
 });
 
-export default model<ITicketDetail>('TicketDetail', TdSchema);
+export default model<ITicketDetail>('TicketDetail', TicketDetailSchema);
