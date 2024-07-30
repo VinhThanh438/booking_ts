@@ -47,14 +47,18 @@ export class UserController {
             // compare password
             const result = await bcrypt.compare(password, userData.password);
 
-            if (!result) res.status(StatusCode.VERIFY_FAILED).json({ message: 'password incorrect!' });
+            if (!result) 
+                res.status(StatusCode.VERIFY_FAILED).json({ message: 'password incorrect!' });
 
             // set token
             const token = await Token.getToken(userData.transform());
 
+            const ip = req.socket.remoteAddress
+
             // save refresh token to redis
             eventbus.emit(EVENT_USER_LOGIN, {
                 userId: userData._id,
+                ip: ip,
                 refreshToken: token.refreshToken,
             });
 
