@@ -12,7 +12,7 @@ export class UserEvent {
     public static async handler(userId: string, refreshToken): Promise<void> {
         try {
             await ConnectRedis.set(`RFT-${userId}`, refreshToken);
-            logger.info('Refresh token is stored');
+            logger.info('Refresh token has stored');
         } catch (error) {
             logger.error(error);
         }
