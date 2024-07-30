@@ -1,6 +1,6 @@
 import logger from '@common/logger';
 import { Request, Response } from 'express';
-import PaymentDetail from '@common/payment-detail/Pd';
+import PaymentDetail from '@common/payment/Payment-detail';
 import eventbus from '@common/eventbus';
 import { EVENT_PAYMENT_CREATED } from '@common/constant/event.constant';
 import { StatusCode } from '@config/status-code';

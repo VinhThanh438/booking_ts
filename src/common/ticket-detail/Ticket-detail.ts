@@ -9,7 +9,7 @@ export interface ITicketDetailReponse {
 }
 
 export interface ITicketDetail extends Document, ITimestamp {
-    _id: any;
+    _id: Schema.Types.ObjectId;
     ticket_name: string;
     user_name: string;
     status: string;
@@ -19,8 +19,8 @@ export interface ITicketDetail extends Document, ITimestamp {
 
 const TdSchema = new Schema<ITicketDetail>(
     {
-        ticket_name: { type: String, require: true, default: null },
-        user_name: { type: String, require: true, default: null },
+        ticket_name: { type: String, require: true },
+        user_name: { type: String, require: true },
         status: { type: String, require: true, default: 'booked' },
     },
     {

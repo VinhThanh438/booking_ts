@@ -5,7 +5,7 @@ import { ConnectRedis } from '@common/infrastructure/redis.connect';
 import { TicketEvent } from '@common/ticket/ticket.event';
 import { TicketDetailEvent } from '@common/ticket-detail/ticket-detail.event';
 import { UserEvent } from '@common/user/user.event';
-import { PaymentEvent } from '@common/payment-detail/pd.event';
+import { PaymentEvent } from '@common/payment/payment.event';
 
 export class Application {
     public static async createApp(): Promise<ExpressServer> {

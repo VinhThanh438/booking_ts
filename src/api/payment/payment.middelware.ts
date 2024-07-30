@@ -9,8 +9,7 @@ export class PaymentMiddleware {
             const userData = await User.findOne({ user_name: userName });
 
             if (userData.balance < total) {
-                logger.error('user balance is insufficient for payment!');
-                return;
+                throw new Error('user balance is insufficient for payment!');
             } else next();
         } catch (error) {
             logger.error(error);

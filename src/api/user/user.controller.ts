@@ -4,7 +4,6 @@ import { Token } from '@config/token';
 import User, { IUser } from '@common/user/User';
 import bcrypt from 'bcrypt';
 import logger from '@common/logger';
-import { ConnectRedis } from '@common/infrastructure/redis.connect';
 import eventbus from '@common/eventbus';
 import { EVENT_USER_LOGIN } from '@common/constant/event.constant';
 
@@ -53,18 +52,18 @@ export class UserController {
             // set token
             const token = await Token.getToken(userData.transform());
 
-            // store refresh token in redis
+            // save refresh token to redis
             eventbus.emit(EVENT_USER_LOGIN, {
                 userId: userData._id,
                 refreshToken: token.refreshToken,
             });
 
             res.status(StatusCode.OK).json({
-                message: 'login successfully!',
+                message: 'loged in successfully!',
                 accessToken: token.accessToken,
             });
         } catch (error) {
-            res.status(StatusCode.REQUEST_UNAUTHORIZED).json({ message: 'cannot register', error });
+            res.status(StatusCode.REQUEST_UNAUTHORIZED).json({ message: 'can not loged in', error });
         }
     }
 }

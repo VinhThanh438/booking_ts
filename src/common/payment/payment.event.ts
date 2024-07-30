@@ -10,9 +10,10 @@ export class PaymentEvent {
         eventbus.on(EVENT_PAYMENT_CREATED, PaymentEvent.handler);
     }
 
-    public static async handler(job: Job, done: DoneCallback): Promise<void> {
+    public static async handler(data: any, done: DoneCallback): Promise<void> {
         try {
-            const { userName, total } = job.data;
+            const { userName, total } = data
+
             const queue = await QueueService.getQueue(DEDUCT_USER_MONEY);
             await queue.add({ userName, total });
         } catch (error) {

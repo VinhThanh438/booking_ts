@@ -32,7 +32,7 @@ export class TicketController {
             let ticketsPerPage = 4;
             let num: SortOrder = 1; // asc
 
-            if (option == 'desc') num = -1; //desc
+            if (option == 'desc') num = -1; // desc
 
             let sortOption: any = { price: num }; // sort by price
 
