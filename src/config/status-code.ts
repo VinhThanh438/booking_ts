@@ -21,6 +21,6 @@ export enum StatusCode {
 
     // SERVER ERROR
     SERVER_ERROR = 500,
-    SERVER_AUTH_ERROR = 501, // and not know why
+    SERVER_AUTH_ERROR = 501, 
     SERVICE_UNAVAILABLE = 503,
 }

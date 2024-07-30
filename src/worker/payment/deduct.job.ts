@@ -17,18 +17,20 @@ export class DeductJob {
     static async handler(job: Job, done: DoneCallback): Promise<void> {
         try {
             const { userName, total } = job.data;
-            const data = await User.findOne({ user_name: userName });
-            const newBalance = data.balance - total;
 
-            if (newBalance < 0) {
-                logger.error('user balance < total price!');
-                return;
-            } else {
-                User.findOneAndUpdate({ userName }, { $set: { balance: newBalance } });
-                logger.info('successfully deducted!');
-            }
+            await User.findOneAndUpdate(
+            {
+                user_name: userName, 
+            }, {
+                $inc: { balance: -total}
+            });
+
+            logger.info('successfully deducted!');
+
+            done()
         } catch (error) {
             logger.error(error);
+            done(error)
         }
     }
 }

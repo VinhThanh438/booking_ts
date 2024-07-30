@@ -19,6 +19,10 @@ export class AuthMidleware {
                 const refreshToken = await ConnectRedis.get(`RFT-${data._id}`);
                 // check refresh token expired time
                 if (isTokenExpried(refreshToken)) {
+                    const ip = req.socket.remoteAddress
+
+                    await ConnectRedis.delete(`RFT-${data._id}-${ip}`)
+                    
                     req.headers.accessToken = null;
                     res.status(StatusCode.VERIFY_FAILED).json({ message: 'user needs to log in again!' });
                 } else {

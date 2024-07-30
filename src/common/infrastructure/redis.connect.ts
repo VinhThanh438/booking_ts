@@ -99,4 +99,8 @@ export class ConnectRedis {
         }
         return (await ConnectRedis.getClient()).set(key, stringValue);
     }
+
+    static async delete(key: string): Promise<unknown> {
+        return (await ConnectRedis.getClient()).del(key);
+    }
 }
