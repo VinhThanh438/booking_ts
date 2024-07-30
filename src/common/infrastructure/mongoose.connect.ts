@@ -5,6 +5,7 @@ import logger from '@common/logger';
 export class ConnectMongoose {
     static async connect(): Promise<void> {
         try {
+            logger.info(MONGO_URL)
             await mongoose.connect(MONGO_URL);
             logger.info('db connected successfully!');
         } catch (error) {
