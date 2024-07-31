@@ -1,5 +1,5 @@
 import ticketRoute from './ticket/ticket.route';
-import tdRoute from './ticketdetail/td.route';
+import tdRoute from './ticketdetail/ticket-detail.route';
 import userRoute from './user/user.route';
 import paymentRoute from './payment/payment.route';
 import express from 'express';

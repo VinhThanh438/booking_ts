@@ -1,5 +1,5 @@
 import express from 'express';
-import { TicketDetailController } from './td.controller';
+import { TicketDetailController } from './ticket-detail.controller';
 import { AuthMidleware } from '@api/auth/auth.middleware';
 const router = express.Router();
 
