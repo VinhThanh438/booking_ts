@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from 'mongoose';
 
 export interface ITicketResponse {
-    id: string;
+    ticket_id: string;
     ticket_name: string;
     price: number;
     quantity: number;
@@ -38,7 +38,7 @@ TicketSchema.method({
      */
     transform(): ITicketResponse {
         const transformed: ITicketResponse = {
-            id: this._id.toHexString(),
+            ticket_id: this._id.toHexString(),
             ticket_name: this.ticket_name,
             price: this.price,
             quantity: this.quantity,
