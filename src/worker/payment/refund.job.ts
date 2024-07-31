@@ -3,6 +3,7 @@ import { DoneCallback, Job, Queue } from 'bull';
 import { REFUND_TO_USER } from '@common/constant/jobname.constant';
 import logger from '@common/logger';
 import User from '@common/user/User';
+import mongoose from 'mongoose';
 
 export class Refund {
     static async register(): Promise<Queue> {
@@ -16,7 +17,11 @@ export class Refund {
     }
 
     static async handler(job: Job, done: DoneCallback): Promise<void> {
+        const session = await mongoose.startSession()
+
         try {
+            session.startTransaction()
+
             const { userId, total } = job.data;
 
             const refundMoney = (total / 100) * 90;
@@ -28,13 +33,17 @@ export class Refund {
 
                 await user.save();
 
+                await session.commitTransaction()
                 logger.info('successfully refunded!');
             } else logger.error('user not found');
 
             done();
         } catch (error) {
+            await session.abortTransaction()
             logger.error(error);
             done(error);
+        } finally {
+            session.endSession()
         }
     }
 }
