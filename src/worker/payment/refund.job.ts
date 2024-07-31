@@ -17,10 +17,10 @@ export class Refund {
     }
 
     static async handler(job: Job, done: DoneCallback): Promise<void> {
-        const session = await mongoose.startSession()
+        const session = await mongoose.startSession();
 
         try {
-            session.startTransaction()
+            session.startTransaction();
 
             const { userId, total } = job.data;
 
@@ -33,17 +33,17 @@ export class Refund {
 
                 await user.save();
 
-                await session.commitTransaction()
+                await session.commitTransaction();
                 logger.info('successfully refunded!');
             } else logger.error('user not found');
 
             done();
         } catch (error) {
-            await session.abortTransaction()
+            await session.abortTransaction();
             logger.error(error);
             done(error);
         } finally {
-            session.endSession()
+            session.endSession();
         }
     }
 }

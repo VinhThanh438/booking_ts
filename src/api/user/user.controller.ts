@@ -86,14 +86,18 @@ export class UserController {
         }
     }
 
-    static async logOut(req: Request, res: Response, next: NextFunction): Promise<void> {
+    static async logOut(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> {
         try {
-            req.headers.accessToken = null
+            req.headers.accessToken = null;
             res.status(StatusCode.OK).json({
-                message: 'loged out sucessfully!'
-            })
+                message: 'loged out sucessfully!',
+            });
         } catch (error) {
-            res.status(StatusCode.SERVER_ERROR).json(error)
+            res.status(StatusCode.SERVER_ERROR).json(error);
         }
     }
 }
