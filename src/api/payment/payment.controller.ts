@@ -47,11 +47,15 @@ export class PaymentController {
 
             const data = await PaymentDetailSchema.findByIdAndDelete(paymentDetailId)
 
-            eventbus.emit(EVENT_BOOKING_CANCELED, {
-                ticketId: data.ticket_id,
-                userId: data.user_id,
-                total: data.total
-            })
+            if (data) {
+                eventbus.emit(EVENT_BOOKING_CANCELED, {
+                    ticketId: data.ticket_id,
+                    userId: data.user_id,
+                    total: data.total
+                })
+            } else {
+                res.status(StatusCode.REQUEST_NOT_FOUND).json({ message: 'Cannot find payment detail!'});
+            }
 
             await session.commitTransaction()
 
