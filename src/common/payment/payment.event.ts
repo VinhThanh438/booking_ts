@@ -15,7 +15,6 @@ import {
 export class PaymentEvent {
     public static register() {
         eventbus.on(EVENT_PAYMENT_CREATED, PaymentEvent.createdHandler);
-
         eventbus.on(EVENT_BOOKING_CANCELED, PaymentEvent.canceledHandler);
     }
 

@@ -9,7 +9,7 @@ export class TicketDetailController {
     static async addBooking(req: Request, res: Response): Promise<void> {
         try {
             const { ticketName, userName } = req.body;
-
+            // lock
             const td = new TicketDetail({
                 icket_name: ticketName,
                 user_name: userName,
