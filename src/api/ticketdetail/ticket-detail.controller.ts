@@ -22,7 +22,9 @@ export class TicketDetailController {
             res.status(StatusCode.OK).json({ message: 'created' });
         } catch (error) {
             logger.error('can not get tickets');
-            res.status(StatusCode.REQUEST_FORBIDDEN).json({ message: 'can not get tickets!' });
+            res.status(StatusCode.REQUEST_FORBIDDEN).json({
+                message: 'can not get tickets!',
+            });
         }
     }
 }

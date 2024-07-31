@@ -2,16 +2,19 @@ import logger from '@common/logger';
 import { Request, Response } from 'express';
 import PaymentDetailSchema from '@common/payment/Payment-detail';
 import eventbus from '@common/eventbus';
-import { EVENT_BOOKING_CANCELED, EVENT_PAYMENT_CREATED } from '@common/constant/event.constant';
+import {
+    EVENT_BOOKING_CANCELED,
+    EVENT_PAYMENT_CREATED,
+} from '@common/constant/event.constant';
 import { StatusCode } from '@config/status-code';
 import mongoose from 'mongoose';
 
 export class PaymentController {
     static async confirmPayment(req: Request, res: Response): Promise<void> {
-        const session = await mongoose.startSession()
-        
+        const session = await mongoose.startSession();
+
         try {
-            session.startTransaction()
+            session.startTransaction();
 
             const { ticketId, userId, total } = req.body;
 
@@ -25,47 +28,61 @@ export class PaymentController {
 
             eventbus.emit(EVENT_PAYMENT_CREATED, { userId, total });
 
-            await session.commitTransaction()
+            await session.commitTransaction();
 
-            res.status(StatusCode.CREATED).json({ message: 'payment success!', data });
+            res.status(StatusCode.CREATED).json({
+                message: 'payment success!',
+                data,
+            });
         } catch (error) {
-            await session.abortTransaction()
+            await session.abortTransaction();
             logger.error('payment could not be confirmed!', error);
-            res.status(StatusCode.REQUEST_FORBIDDEN).json({ message: 'payment could not be confirmed!' });
+            res.status(StatusCode.REQUEST_FORBIDDEN).json({
+                message: 'payment could not be confirmed!',
+            });
         } finally {
-            session.endSession()
+            session.endSession();
         }
     }
 
     static async bookingCancel(req: Request, res: Response): Promise<void> {
-        const session = await mongoose.startSession()
+        const session = await mongoose.startSession();
 
         try {
-            session.startTransaction()
+            session.startTransaction();
 
-            const { paymentDetailId } = req.body
+            const { paymentDetailId } = req.body;
 
-            const data = await PaymentDetailSchema.findByIdAndDelete(paymentDetailId)
+            const data = await PaymentDetailSchema.findByIdAndDelete(
+                paymentDetailId,
+            );
 
             if (data) {
                 eventbus.emit(EVENT_BOOKING_CANCELED, {
                     ticketId: data.ticket_id,
                     userId: data.user_id,
-                    total: data.total
-                })
+                    total: data.total,
+                });
             } else {
-                res.status(StatusCode.REQUEST_NOT_FOUND).json({ message: 'Cannot find payment detail!'});
+                res.status(StatusCode.REQUEST_NOT_FOUND).json({
+                    message: 'Cannot find payment detail!',
+                });
             }
 
-            await session.commitTransaction()
+            await session.commitTransaction();
 
-            res.status(StatusCode.OK).json({ message: 'booking has canceled!', data});
+            res.status(StatusCode.OK).json({
+                message: 'booking has canceled!',
+                data,
+            });
         } catch (error) {
-            await session.abortTransaction()
-            logger.error('payment could not be confirmed!', error);
-            res.status(StatusCode.REQUEST_FORBIDDEN).json({ message: 'payment could not be confirmed!' });
+            await session.abortTransaction();
+            res.status(StatusCode.REQUEST_FORBIDDEN).json({
+                message: 'payment could not be confirmed!',
+                error,
+            });
         } finally {
-            session.endSession()
+            session.endSession();
         }
     }
 }

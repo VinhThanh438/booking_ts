@@ -92,10 +92,22 @@ export class ConnectRedis {
         return shouldDeserialize ? ConnectRedis.deserialize(value) : value;
     }
 
-    static async set(key: string, value: unknown, ttl = 0, shouldSerialize = false): Promise<unknown> {
-        const stringValue: string = shouldSerialize ? ConnectRedis.serialize(value) : (value as string);
+    static async set(
+        key: string,
+        value: unknown,
+        ttl = 0,
+        shouldSerialize = false,
+    ): Promise<unknown> {
+        const stringValue: string = shouldSerialize
+            ? ConnectRedis.serialize(value)
+            : (value as string);
         if (ttl > 0) {
-            return (await ConnectRedis.getClient()).set(key, stringValue, 'EX', ttl);
+            return (await ConnectRedis.getClient()).set(
+                key,
+                stringValue,
+                'EX',
+                ttl,
+            );
         }
         return (await ConnectRedis.getClient()).set(key, stringValue);
     }

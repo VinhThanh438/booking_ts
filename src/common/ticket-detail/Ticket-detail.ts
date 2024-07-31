@@ -2,7 +2,7 @@ import { ITimestamp } from '@common/timestamp.interface';
 import { Schema, model } from 'mongoose';
 
 export enum Status {
-    BOOKED = 'booked'
+    BOOKED = 'booked',
 }
 
 export interface ITicketDetailReponse {
@@ -25,7 +25,11 @@ const TicketDetailSchema = new Schema<ITicketDetail>(
     {
         ticket_name: { type: String, require: true },
         user_name: { type: String, require: true },
-        status: { type: String, enum: Object.values(Status), default: Status.BOOKED }
+        status: {
+            type: String,
+            enum: Object.values(Status),
+            default: Status.BOOKED,
+        },
     },
     {
         timestamps: {
@@ -41,7 +45,7 @@ TicketDetailSchema.method({
             td_id: this._id.toHexString(),
             ticket_name: this.ticket_name,
             user_name: this.user_name,
-            status: this.status
+            status: this.status,
         };
 
         return transformed;

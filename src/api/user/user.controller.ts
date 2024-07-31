@@ -15,7 +15,9 @@ export class UserController {
             const existedUser = await User.findOne({ user_name: userName });
 
             if (existedUser) {
-                res.status(StatusCode.AUTH_ACCOUNT_EXISTS).json({ message: 'user name existed!' });
+                res.status(StatusCode.AUTH_ACCOUNT_EXISTS).json({
+                    message: 'user name existed!',
+                });
             } else {
                 const salt = await bcrypt.genSalt(10);
                 const hashed = await bcrypt.hash(password, salt);
@@ -27,11 +29,16 @@ export class UserController {
                     }),
                 );
 
-                res.status(StatusCode.CREATED).json({ message: 'registed successfully! ' });
+                res.status(StatusCode.CREATED).json({
+                    message: 'registed successfully! ',
+                });
             }
         } catch (error) {
             logger.error(error);
-            res.status(StatusCode.REQUEST_FORBIDDEN).json({ message: 'cannot register', error });
+            res.status(StatusCode.REQUEST_FORBIDDEN).json({
+                message: 'cannot register',
+                error,
+            });
         }
     }
 
@@ -42,18 +49,23 @@ export class UserController {
             const userData = await User.findOne({ user_name: userName });
 
             // check user name
-            if (!userData) res.status(StatusCode.AUTH_ACCOUNT_NOT_FOUND).json({ message: 'user not found ' });
+            if (!userData)
+                res.status(StatusCode.AUTH_ACCOUNT_NOT_FOUND).json({
+                    message: 'user not found ',
+                });
 
             // compare password
             const result = await bcrypt.compare(password, userData.password);
 
-            if (!result) 
-                res.status(StatusCode.VERIFY_FAILED).json({ message: 'password incorrect!' });
+            if (!result)
+                res.status(StatusCode.VERIFY_FAILED).json({
+                    message: 'password incorrect!',
+                });
 
             // set token
             const token = await Token.getToken(userData.transform());
 
-            const ip = req.socket.remoteAddress
+            const ip = req.socket.remoteAddress;
 
             // save refresh token to redis
             eventbus.emit(EVENT_USER_LOGIN, {
@@ -67,7 +79,10 @@ export class UserController {
                 accessToken: token.accessToken,
             });
         } catch (error) {
-            res.status(StatusCode.REQUEST_UNAUTHORIZED).json({ message: 'can not loged in', error });
+            res.status(StatusCode.REQUEST_UNAUTHORIZED).json({
+                message: 'can not loged in',
+                error,
+            });
         }
     }
 }

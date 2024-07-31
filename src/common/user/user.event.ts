@@ -9,7 +9,11 @@ export class UserEvent {
         eventbus.on(EVENT_USER_LOGIN, UserEvent.handler);
     }
 
-    public static async handler(userId: string, refreshToken, ip): Promise<void> {
+    public static async handler(
+        userId: string,
+        refreshToken,
+        ip,
+    ): Promise<void> {
         try {
             await ConnectRedis.set(`RFT-${userId}-${ip}`, refreshToken);
             logger.info('Refresh token has stored');

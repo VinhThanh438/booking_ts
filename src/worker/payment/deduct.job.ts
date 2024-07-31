@@ -19,18 +19,20 @@ export class DeductJob {
             const { userId, total } = job.data;
 
             await User.findOneAndUpdate(
-            {
-                _id: userId, 
-            }, {
-                $inc: { balance: -total}
-            });
+                {
+                    _id: userId,
+                },
+                {
+                    $inc: { balance: -total },
+                },
+            );
 
             logger.info('successfully deducted!');
 
-            done()
+            done();
         } catch (error) {
             logger.error(error);
-            done(error)
+            done(error);
         }
     }
 }

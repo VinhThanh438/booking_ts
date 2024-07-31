@@ -3,7 +3,11 @@ import User from '@common/user/User';
 import { Request, Response, NextFunction } from 'express';
 
 export class PaymentMiddleware {
-    static async checkUserBalance(req: Request, res: Response, next: NextFunction): Promise<void> {
+    static async checkUserBalance(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ): Promise<void> {
         try {
             const { userId, total } = req.body;
             const userData = await User.findOne({ _id: userId });

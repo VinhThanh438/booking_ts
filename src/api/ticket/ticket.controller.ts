@@ -20,7 +20,10 @@ export class TicketController {
 
             res.status(StatusCode.OK).json({ data });
         } catch (error) {
-            res.status(StatusCode.REQUEST_FORBIDDEN).json({ message: 'can not get tickets', error });
+            res.status(StatusCode.REQUEST_FORBIDDEN).json({
+                message: 'can not get tickets',
+                error,
+            });
         }
     }
 
@@ -45,7 +48,10 @@ export class TicketController {
 
             res.status(StatusCode.OK).json({ data });
         } catch (error) {
-            res.status(StatusCode.REQUEST_FORBIDDEN).json({ message: 'can not get tickets', error });
+            res.status(StatusCode.REQUEST_FORBIDDEN).json({
+                message: 'can not get tickets',
+                error,
+            });
         }
     }
 
@@ -66,7 +72,9 @@ export class TicketController {
             res.status(StatusCode.CREATED).json({ message: 'created' });
         } catch (error) {
             logger.error('can not add tickets', error);
-            res.status(StatusCode.REQUEST_FORBIDDEN).json({ message: 'can not add tickets' });
+            res.status(StatusCode.REQUEST_FORBIDDEN).json({
+                message: 'can not add tickets',
+            });
         }
     }
 }

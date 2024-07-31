@@ -19,23 +19,22 @@ export class Refund {
         try {
             const { userId, total } = job.data;
 
-            const refundMoney = (total / 100) * 90
+            const refundMoney = (total / 100) * 90;
 
-            const user = await User.findById(userId)
+            const user = await User.findById(userId);
 
             if (user) {
-                user.balance += refundMoney
+                user.balance += refundMoney;
 
-                await user.save()
+                await user.save();
 
                 logger.info('successfully refunded!');
-            } else 
-                logger.error('user not found')
+            } else logger.error('user not found');
 
-            done()
+            done();
         } catch (error) {
             logger.error(error);
-            done(error)
+            done(error);
         }
     }
 }

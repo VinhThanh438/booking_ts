@@ -5,11 +5,17 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 export class AuthMidleware {
-    public static async requireAuth(req: Request, res: Response, next: NextFunction) {
+    public static async requireAuth(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) {
         try {
             const accessToken = req.headers.accessToken;
             if (!accessToken) {
-                res.status(StatusCode.SERVER_AUTH_ERROR).json({ message: 'token is missing' });
+                res.status(StatusCode.SERVER_AUTH_ERROR).json({
+                    message: 'token is missing',
+                });
             }
 
             if (isTokenExpried(accessToken)) {
@@ -19,12 +25,14 @@ export class AuthMidleware {
                 const refreshToken = await ConnectRedis.get(`RFT-${data._id}`);
                 // check refresh token expired time
                 if (isTokenExpried(refreshToken)) {
-                    const ip = req.socket.remoteAddress
+                    const ip = req.socket.remoteAddress;
 
-                    await ConnectRedis.delete(`RFT-${data._id}-${ip}`)
-                    
+                    await ConnectRedis.delete(`RFT-${data._id}-${ip}`);
+
                     req.headers.accessToken = null;
-                    res.status(StatusCode.VERIFY_FAILED).json({ message: 'user needs to log in again!' });
+                    res.status(StatusCode.VERIFY_FAILED).json({
+                        message: 'user needs to log in again!',
+                    });
                 } else {
                     // create new access token
                     const newAccessToken = await Token.accessToken({

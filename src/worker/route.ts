@@ -7,7 +7,12 @@ import { UpdateQuantity } from './payment/update-quantity.job';
 
 export class Router {
     static async register(): Promise<Queue[]> {
-        const queues: IJobHangler[] = [AutoCancelJob, DeductJob, Refund, UpdateQuantity];
+        const queues: IJobHangler[] = [
+            AutoCancelJob,
+            DeductJob,
+            Refund,
+            UpdateQuantity,
+        ];
         return Promise.all(queues.map((q) => q.register()));
     }
 }
