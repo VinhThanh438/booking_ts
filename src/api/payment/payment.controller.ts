@@ -1,6 +1,6 @@
 import logger from '@common/logger';
 import { Request, Response } from 'express';
-import PaymentDetail from '@common/payment/Payment-detail';
+import PaymentDetailSchema from '@common/payment/Payment-detail';
 import eventbus from '@common/eventbus';
 import { EVENT_BOOKING_CANCELED, EVENT_PAYMENT_CREATED } from '@common/constant/event.constant';
 import { StatusCode } from '@config/status-code';
@@ -15,8 +15,8 @@ export class PaymentController {
 
             const { ticketId, userId, total } = req.body;
 
-            const data = await PaymentDetail.create(
-                new PaymentDetail({
+            const data = await PaymentDetailSchema.create(
+                new PaymentDetailSchema({
                     ticket_id: ticketId,
                     user_id: userId,
                     total,
@@ -46,7 +46,7 @@ export class PaymentController {
             const { paymentDetailId } = req.body
             console.log(paymentDetailId)
 
-            const data = await PaymentDetail.findByIdAndDelete(paymentDetailId)
+            const data = await PaymentDetailSchema.findByIdAndDelete(paymentDetailId)
 
             // eventbus.emit(EVENT_BOOKING_CANCELED)
 

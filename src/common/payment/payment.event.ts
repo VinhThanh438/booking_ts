@@ -12,10 +12,10 @@ export class PaymentEvent {
 
     public static async handler(data: any, done: DoneCallback): Promise<void> {
         try {
-            const { userName, total } = data
+            const { userId, total } = data
 
             const queue = await QueueService.getQueue(DEDUCT_USER_MONEY);
-            await queue.add({ userName, total });
+            await queue.add({ userId, total });
         } catch (error) {
             logger.error('can not update user`s balance!', error);
         }

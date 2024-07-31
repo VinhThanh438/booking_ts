@@ -17,7 +17,7 @@ export interface IPaymentDetail extends Document, ITimestamp {
     transform(): IPaymentDetailReponse;
 }
 
-const pdSchema = new Schema<IPaymentDetail>(
+const PaymentDetailSchema = new Schema<IPaymentDetail>(
     {
         ticket_id: { type: String, required: true, default: null },
         user_id: { type: String, required: true, default: null },
@@ -31,7 +31,7 @@ const pdSchema = new Schema<IPaymentDetail>(
     },
 );
 
-pdSchema.method({
+PaymentDetailSchema.method({
     transform(): IPaymentDetailReponse {
         const transformed: IPaymentDetailReponse = {
             pd_id: this._id.toHexString(),
@@ -44,4 +44,4 @@ pdSchema.method({
     },
 });
 
-export default model<IPaymentDetail>('PaymentDetail', pdSchema);
+export default model<IPaymentDetail>('PaymentDetail', PaymentDetailSchema);

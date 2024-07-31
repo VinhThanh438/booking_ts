@@ -16,11 +16,11 @@ export class DeductJob {
 
     static async handler(job: Job, done: DoneCallback): Promise<void> {
         try {
-            const { userName, total } = job.data;
+            const { userId, total } = job.data;
 
             await User.findOneAndUpdate(
             {
-                user_name: userName, 
+                _id: userId, 
             }, {
                 $inc: { balance: -total}
             });

@@ -5,8 +5,8 @@ import { Request, Response, NextFunction } from 'express';
 export class PaymentMiddleware {
     static async checkUserBalance(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const { userName, total } = req.body;
-            const userData = await User.findOne({ user_name: userName });
+            const { userId, total } = req.body;
+            const userData = await User.findOne({ _id: userId });
 
             if (userData.balance < total)
                 throw new Error('user balance is insufficient for payment!');
