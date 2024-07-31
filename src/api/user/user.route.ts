@@ -6,4 +6,6 @@ router.post('/register', UserController.register);
 
 router.post('/login', UserController.logIn);
 
+router.get('/logout', UserController.logOut)
+
 export default router;

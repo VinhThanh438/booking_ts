@@ -1,5 +1,5 @@
 import { StatusCode } from '@config/status-code';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Token } from '@config/token';
 import User, { IUser } from '@common/user/User';
 import bcrypt from 'bcrypt';
@@ -83,6 +83,17 @@ export class UserController {
                 message: 'can not loged in',
                 error,
             });
+        }
+    }
+
+    static async logOut(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            req.headers.accessToken = null
+            res.status(StatusCode.OK).json({
+                message: 'loged out sucessfully!'
+            })
+        } catch (error) {
+            res.status(StatusCode.SERVER_ERROR).json(error)
         }
     }
 }
