@@ -44,11 +44,14 @@ export class PaymentController {
             session.startTransaction()
 
             const { paymentDetailId } = req.body
-            console.log(paymentDetailId)
 
             const data = await PaymentDetailSchema.findByIdAndDelete(paymentDetailId)
 
-            // eventbus.emit(EVENT_BOOKING_CANCELED)
+            eventbus.emit(EVENT_BOOKING_CANCELED, {
+                ticketId: data.ticket_id,
+                userId: data.user_id,
+                total: data.total
+            })
 
             await session.commitTransaction()
 
