@@ -3,15 +3,15 @@ import { Schema, model } from 'mongoose';
 
 export interface IPaymentDetailReponse {
     pd_id: string;
-    ticket_name: string;
-    user_name: string;
+    ticket_id: string;
+    user_id: string;
     total: number;
 }
 
 export interface IPaymentDetail extends Document, ITimestamp {
     _id: Schema.Types.ObjectId;
-    ticket_name: string;
-    user_name: string;
+    ticket_id: string;
+    user_id: string;
     total: number;
 
     transform(): IPaymentDetailReponse;
@@ -19,8 +19,8 @@ export interface IPaymentDetail extends Document, ITimestamp {
 
 const pdSchema = new Schema<IPaymentDetail>(
     {
-        ticket_name: { type: String, required: true, default: null },
-        user_name: { type: String, required: true, default: null },
+        ticket_id: { type: String, required: true, default: null },
+        user_id: { type: String, required: true, default: null },
         total: { type: Number, required: true, defaul: null },
     },
     {
@@ -35,8 +35,8 @@ pdSchema.method({
     transform(): IPaymentDetailReponse {
         const transformed: IPaymentDetailReponse = {
             pd_id: this._id.toHexString(),
-            ticket_name: this.ticket_name,
-            user_name: this.user_name,
+            ticket_id: this.ticket_name,
+            user_id: this.user_name,
             total: this.total,
         };
 
