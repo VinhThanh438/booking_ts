@@ -8,7 +8,6 @@ export class ConnectMongoose {
             await mongoose.connect(MONGO_URL);
             logger.info('db connected successfully!');
         } catch (error) {
-            console.log(error);
             logger.error('can not connect to db!');
             logger.error(error);
         }

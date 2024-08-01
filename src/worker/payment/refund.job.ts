@@ -34,16 +34,17 @@ export class Refund {
                 await user.save();
 
                 await session.commitTransaction();
+                session.endSession()
                 logger.info('successfully refunded!');
             } else logger.error('user not found');
 
             done();
         } catch (error) {
-            await session.abortTransaction();
-            logger.error(error);
-            done(error);
-        } finally {
-            session.endSession();
+            session.abortTransaction().finally(() => {
+                logger.error(error);
+                session.endSession();
+                done(error);
+            });
         }
     }
 }
