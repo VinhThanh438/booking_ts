@@ -12,6 +12,7 @@ export interface ITicket extends Document {
     ticket_name: string;
     price: number;
     quantity: number;
+    locked: boolean
 
     transform(): ITicketResponse;
 }
@@ -21,6 +22,7 @@ const TicketSchema: Schema<ITicket> = new Schema(
         ticket_name: { type: String, require: true },
         price: { type: Number, require: true },
         quantity: { type: Number, require: true, default: 5 },
+        locked: { type: Boolean, required: true, default: false}
     },
     {
         timestamps: {

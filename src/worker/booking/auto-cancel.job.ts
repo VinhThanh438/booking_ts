@@ -35,6 +35,7 @@ export class AutoCancelJob {
                     $inc: {
                         quantity: 1,
                     },
+                    locked: false
                 },
             );
 
