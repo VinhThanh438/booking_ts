@@ -8,16 +8,19 @@ import { StatusCode } from '@config/status-code';
 export class TicketDetailController {
     static async addBooking(req: Request, res: Response): Promise<void> {
         try {
-            const { ticketName, userName } = req.body;
+            const { ticketId, userId } = req.body;
             // lock
             const td = new TicketDetail({
-                icket_name: ticketName,
-                user_name: userName,
+                ticket_id: ticketId,
+                user_id: userId,
             });
 
             const data = await td.save();
 
-            eventbus.emit(EVENT_BOOKING_CREATED, { id: data._id });
+            eventbus.emit(EVENT_BOOKING_CREATED, { 
+                ticketDetailId: data._id, 
+                ticketId: data.ticket_id 
+            });
 
             res.status(StatusCode.OK).json({ message: 'created' });
         } catch (error) {

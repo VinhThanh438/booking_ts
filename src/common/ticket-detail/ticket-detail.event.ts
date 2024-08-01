@@ -9,10 +9,16 @@ export class TicketDetailEvent {
         eventbus.on(EVENT_BOOKING_CREATED, TicketDetailEvent.handler);
     }
 
-    public static async handler(): Promise<void> {
+    public static async handler(data: any): Promise<void> {
         try {
             const getQueue = await QueueService.getQueue(AUTO_CANCEL);
-            await getQueue.add({}, { delay: 7 * 1000 }); // 7 seconds
+
+            await getQueue.add({ 
+                ticketDetailId: data.ticketDetailId, 
+                ticketId: data.ticketId 
+            }, 
+            { delay: 10 * 1000 }); // 10 seconds
+
         } catch (error) {
             logger.error(error);
         }

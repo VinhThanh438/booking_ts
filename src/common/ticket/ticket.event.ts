@@ -9,10 +9,9 @@ export class TicketEvent {
         eventbus.on(EVENT_BOOKING_CREATED, TicketEvent.bookingCreatedHandler);
     }
 
-    public static async bookingCreatedHandler(id: number): Promise<void> {
+    public static async bookingCreatedHandler(data: any): Promise<void> {
         try {
-            logger.info('TicketEvent.bookingCreatedHandler with id', id);
-            await Ticket.findOneAndUpdate({ id }, { $inc: { quantity: 1 } });
+            await Ticket.findOneAndUpdate({ _id: data.ticketId }, { $inc: { quantity: -1 } });
             logger.info('Ticket updated');
         } catch (error) {
             logger.error(error);

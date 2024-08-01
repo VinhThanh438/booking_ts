@@ -7,15 +7,15 @@ export enum Status {
 
 export interface ITicketDetailReponse {
     td_id: string;
-    ticket_name: string;
-    user_name: string;
+    ticket_id: string;
+    user_id: string;
     status: string;
 }
 
 export interface ITicketDetail extends Document, ITimestamp {
     _id: Schema.Types.ObjectId;
-    ticket_name: string;
-    user_name: string;
+    ticket_id: string;
+    user_id: string;
     status: Status;
 
     transform(): ITicketDetailReponse;
@@ -23,8 +23,8 @@ export interface ITicketDetail extends Document, ITimestamp {
 
 const TicketDetailSchema = new Schema<ITicketDetail>(
     {
-        ticket_name: { type: String, require: true },
-        user_name: { type: String, require: true },
+        ticket_id: { type: String, require: true },
+        user_id: { type: String, require: true },
         status: {
             type: String,
             enum: Object.values(Status),
@@ -43,8 +43,8 @@ TicketDetailSchema.method({
     transform(): ITicketDetailReponse {
         const transformed: ITicketDetailReponse = {
             td_id: this._id.toHexString(),
-            ticket_name: this.ticket_name,
-            user_name: this.user_name,
+            ticket_id: this.ticket_name,
+            user_id: this.user_name,
             status: this.status,
         };
 
