@@ -13,12 +13,13 @@ export class BookingEvent {
         try {
             const getQueue = await QueueService.getQueue(AUTO_CANCEL);
 
-            await getQueue.add({ 
-                bookingId: data.bookingId, 
-                ticketId: data.ticketId 
-            }, 
-            { delay: 10 * 1000 }); // 10 seconds
-
+            await getQueue.add(
+                {
+                    bookingId: data.bookingId,
+                    ticketId: data.ticketId,
+                },
+                { delay: 10 * 1000 },
+            ); // 10 seconds
         } catch (error) {
             logger.error(error);
         }

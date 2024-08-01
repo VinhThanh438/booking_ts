@@ -19,32 +19,34 @@ export class AutoCancelJob {
     }
 
     static async handler(job: Job<any>, done: DoneCallback): Promise<void> {
-        const session = await mongoose.startSession()
+        const session = await mongoose.startSession();
         try {
-            session.startTransaction()
+            session.startTransaction();
 
-            await Booking.findOneAndDelete({ 
-                _id: job.data.bookingId, 
-                status: Status.BOOKED 
+            await Booking.findOneAndDelete({
+                _id: job.data.bookingId,
+                status: Status.BOOKED,
             });
 
             // update ticket quantity
             await Ticket.findOneAndUpdate(
                 { _id: job.data.ticketId },
-                { $inc: { 
-                    quantity: 1 
-                } }
-            )
+                {
+                    $inc: {
+                        quantity: 1,
+                    },
+                },
+            );
 
             logger.info('Booking has been canceled!');
-            await session.commitTransaction()
+            await session.commitTransaction();
             done();
         } catch (error) {
             logger.error('Can not delete booking', error);
-            await session.abortTransaction()
+            await session.abortTransaction();
             done(error);
         } finally {
-            session.endSession()
+            session.endSession();
         }
     }
 }

@@ -17,9 +17,9 @@ export class BookingController {
 
             const data = await booking.save();
 
-            eventbus.emit(EVENT_BOOKING_CREATED, { 
-                bookingId: data._id, 
-                ticketId: data.ticket_id 
+            eventbus.emit(EVENT_BOOKING_CREATED, {
+                bookingId: data._id,
+                ticketId: data.ticket_id,
             });
 
             res.status(StatusCode.OK).json({ message: 'created' });
