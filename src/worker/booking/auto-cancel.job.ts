@@ -24,7 +24,7 @@ export class AutoCancelJob {
             session.startTransaction()
 
             await Booking.findOneAndDelete({ 
-                _id: job.data.ticketDetailId, 
+                _id: job.data.bookingId, 
                 status: Status.BOOKED 
             });
 

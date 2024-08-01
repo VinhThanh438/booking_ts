@@ -14,7 +14,7 @@ export class BookingEvent {
             const getQueue = await QueueService.getQueue(AUTO_CANCEL);
 
             await getQueue.add({ 
-                ticketDetailId: data.ticketDetailId, 
+                bookingId: data.bookingId, 
                 ticketId: data.ticketId 
             }, 
             { delay: 10 * 1000 }); // 10 seconds
