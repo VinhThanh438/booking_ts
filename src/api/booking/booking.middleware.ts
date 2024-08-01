@@ -11,10 +11,12 @@ export class BookingMiddleware {
     ): Promise<void> {
         try {
             const ticketId = req.body.ticketId;
+            
             const data = await Ticket.findOne({
                 _id: ticketId,
                 quantity: { $lte: 0 },
             });
+
             if (data) {
                 res.status(StatusCode.REQUEST_FORBIDDEN).json({
                     message: 'tickets are sold out',

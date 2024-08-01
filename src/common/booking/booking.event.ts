@@ -18,8 +18,8 @@ export class BookingEvent {
                     bookingId: data.bookingId,
                     ticketId: data.ticketId,
                 },
-                { delay: 10 * 1000 },
-            ); // 10 seconds
+                { delay: 20 * 1000 },
+            ); // 20 seconds
         } catch (error) {
             logger.error(error);
         }

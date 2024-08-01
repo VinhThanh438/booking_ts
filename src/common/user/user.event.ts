@@ -9,13 +9,11 @@ export class UserEvent {
         eventbus.on(EVENT_USER_LOGIN, UserEvent.handler);
     }
 
-    public static async handler(
-        userId: string,
-        refreshToken,
-        ip,
-    ): Promise<void> {
+    public static async handler(data): Promise<void> {
         try {
-            await ConnectRedis.set(`RFT-${userId}-${ip}`, refreshToken);
+            await ConnectRedis.set(`RFT-${data.userId}-${data.ip}`, data.refreshToken);
+            const rt = await ConnectRedis.get(`RFT-${data.userId}-${data.ip}`)
+            console.log('rt_____________',rt)
             logger.info('Refresh token has stored');
         } catch (error) {
             logger.error(error);

@@ -11,23 +11,27 @@ export class AuthMidleware {
         next: NextFunction,
     ) {
         try {
-            const accessToken = req.headers.accessToken;
+            const accessToken = req.headers.accesstoken;
+
             if (!accessToken) {
                 res.status(StatusCode.SERVER_AUTH_ERROR).json({
                     message: 'token is missing',
                 });
-            }
-
-            if (isTokenExpried(accessToken)) {
+            } 
+            
+            const isAccessTokenExpired = await isTokenExpried(accessToken)
+            if (isAccessTokenExpired) { // if access token is expired
                 // decode access token
-                const data = jwt.decode(accessToken);
-                // get refresh token
-                const refreshToken = await ConnectRedis.get(`RFT-${data._id}`);
-                // check refresh token expired time
-                if (isTokenExpried(refreshToken)) {
-                    const ip = req.socket.remoteAddress;
+                const data = await jwt.decode(accessToken);
 
-                    await ConnectRedis.delete(`RFT-${data._id}-${ip}`);
+                // get refresh token
+                const ip = req.socket.remoteAddress;
+                const refreshToken = await ConnectRedis.get(`RFT-${data.user_id}-${ip}`);
+                const isRefreshTokenExpired = await isTokenExpried(refreshToken)
+
+                // check refresh token expired time
+                if (isRefreshTokenExpired) {
+                    await ConnectRedis.delete(`RFT-${data.user_id}-${ip}`);
 
                     req.headers.accessToken = null;
                     res.status(StatusCode.VERIFY_FAILED).json({
@@ -41,9 +45,11 @@ export class AuthMidleware {
                         balance: data.balance,
                     });
                     req.headers.accessToken = newAccessToken;
+                    next()
                 }
+            } else {
+                next();
             }
-            next();
         } catch (error) {
             next(error);
         }

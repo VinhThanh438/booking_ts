@@ -23,7 +23,7 @@ export class Token {
             },
             ACCESSTOKEN_KEY,
             {
-                expiresIn: '60s',
+                expiresIn: '120s',
             },
         );
     }
@@ -43,9 +43,9 @@ export class Token {
     }
 }
 
-export const isTokenExpried = (token) => {
-    const decodeToken = jwt.decode(token);
+export const isTokenExpried = async (token) => {
+    const decodeToken = await jwt.decode(token);
     const expirationTime = decodeToken.exp * 1000;
     const currentTime = Date.now().valueOf() / 1000;
-    return expirationTime > currentTime;
+    return expirationTime <= currentTime;
 };
