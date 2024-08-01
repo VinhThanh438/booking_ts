@@ -17,17 +17,22 @@ export class AuthMidleware {
                 res.status(StatusCode.SERVER_AUTH_ERROR).json({
                     message: 'token is missing',
                 });
-            } 
-            
-            const isAccessTokenExpired = await isTokenExpried(accessToken)
-            if (isAccessTokenExpired) { // if access token is expired
+            }
+
+            const isAccessTokenExpired = await isTokenExpried(accessToken);
+            if (isAccessTokenExpired) {
+                // if access token is expired
                 // decode access token
                 const data = await jwt.decode(accessToken);
 
                 // get refresh token
                 const ip = req.socket.remoteAddress;
-                const refreshToken = await ConnectRedis.get(`RFT-${data.user_id}-${ip}`);
-                const isRefreshTokenExpired = await isTokenExpried(refreshToken)
+                const refreshToken = await ConnectRedis.get(
+                    `RFT-${data.user_id}-${ip}`,
+                );
+                const isRefreshTokenExpired = await isTokenExpried(
+                    refreshToken,
+                );
 
                 // check refresh token expired time
                 if (isRefreshTokenExpired) {
@@ -45,7 +50,7 @@ export class AuthMidleware {
                         balance: data.balance,
                     });
                     req.headers.accessToken = newAccessToken;
-                    next()
+                    next();
                 }
             } else {
                 next();

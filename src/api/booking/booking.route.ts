@@ -5,10 +5,11 @@ import { BookingMiddleware } from './booking.middleware';
 const router = express.Router();
 
 // router.post('/', AuthMidleware.requireAuth, TicketDetailController.addBooking);
-router.post('/', 
-    AuthMidleware.requireAuth, 
-    BookingMiddleware.checkQuantity, 
-    BookingController.addBooking
+router.post(
+    '/',
+    AuthMidleware.requireAuth,
+    BookingMiddleware.checkQuantity,
+    BookingController.addBooking,
 );
 
 export default router;

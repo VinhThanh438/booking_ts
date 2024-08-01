@@ -11,7 +11,7 @@ export class BookingMiddleware {
     ): Promise<void> {
         try {
             const ticketId = req.body.ticketId;
-            
+
             const data = await Ticket.findOne({
                 _id: ticketId,
                 quantity: { $lte: 0 },
