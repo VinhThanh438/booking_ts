@@ -41,13 +41,14 @@ export class AutoCancelJob {
 
             logger.info('Booking has been canceled!');
             await session.commitTransaction();
+            session.endSession()
             done();
         } catch (error) {
-            logger.error('Can not delete booking', error);
-            await session.abortTransaction();
-            done(error);
-        } finally {
-            session.endSession();
+            session.abortTransaction().finally(() => {
+                logger.error('Can not delete booking', error);
+                session.endSession();
+                done(error);
+            });
         }
     }
 }

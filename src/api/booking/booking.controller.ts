@@ -9,7 +9,7 @@ export class BookingController {
     static async addBooking(req: Request, res: Response): Promise<void> {
         try {
             const { ticketId, userId } = req.body;
-            // lock
+            
             const booking = new Booking({
                 ticket_id: ticketId,
                 user_id: userId,

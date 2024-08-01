@@ -11,6 +11,7 @@ import {
     REFUND_TO_USER,
     UPDATE_TICKET_QUANTITY,
 } from '@common/constant/jobname.constant';
+import { IPaymentEvent } from './payment-event.interface';
 
 export class PaymentEvent {
     public static register() {
@@ -19,7 +20,7 @@ export class PaymentEvent {
     }
 
     public static async createdHandler(
-        data: any,
+        data: IPaymentEvent,
         done: DoneCallback,
     ): Promise<void> {
         try {
@@ -33,7 +34,7 @@ export class PaymentEvent {
     }
 
     public static async canceledHandler(
-        data: any,
+        data: IPaymentEvent,
         done: DoneCallback,
     ): Promise<void> {
         try {
