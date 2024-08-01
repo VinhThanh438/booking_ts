@@ -4,9 +4,9 @@ import eventbus from '@common/eventbus';
 import logger from '@common/logger';
 import { QueueService } from '@common/queue/queue.service';
 
-export class TicketDetailEvent {
+export class BookingEvent {
     public static register() {
-        eventbus.on(EVENT_BOOKING_CREATED, TicketDetailEvent.handler);
+        eventbus.on(EVENT_BOOKING_CREATED, BookingEvent.handler);
     }
 
     public static async handler(data: any): Promise<void> {

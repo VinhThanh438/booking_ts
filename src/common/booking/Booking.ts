@@ -5,23 +5,23 @@ export enum Status {
     BOOKED = 'booked',
 }
 
-export interface ITicketDetailReponse {
-    td_id: string;
+export interface IBookingReponse {
+    booking_id: string;
     ticket_id: string;
     user_id: string;
     status: string;
 }
 
-export interface ITicketDetail extends Document, ITimestamp {
+export interface IBooking extends Document, ITimestamp {
     _id: Schema.Types.ObjectId;
     ticket_id: string;
     user_id: string;
     status: Status;
 
-    transform(): ITicketDetailReponse;
+    transform(): IBookingReponse;
 }
 
-const TicketDetailSchema = new Schema<ITicketDetail>(
+const BookingSchema = new Schema<IBooking>(
     {
         ticket_id: { type: String, require: true },
         user_id: { type: String, require: true },
@@ -39,10 +39,10 @@ const TicketDetailSchema = new Schema<ITicketDetail>(
     },
 );
 
-TicketDetailSchema.method({
-    transform(): ITicketDetailReponse {
-        const transformed: ITicketDetailReponse = {
-            td_id: this._id.toHexString(),
+BookingSchema.method({
+    transform(): IBookingReponse {
+        const transformed: IBookingReponse = {
+            booking_id: this._id.toHexString(),
             ticket_id: this.ticket_name,
             user_id: this.user_name,
             status: this.status,
@@ -52,4 +52,4 @@ TicketDetailSchema.method({
     },
 });
 
-export default model<ITicketDetail>('TicketDetail', TicketDetailSchema);
+export default model<IBooking>('Booking', BookingSchema);

@@ -1,7 +1,7 @@
 import logger from '@common/logger';
 import { QueueService } from '@common/queue/queue.service';
 import { Job, DoneCallback, Queue } from 'bull';
-import TicketDetail, { Status } from '@common/ticket-detail/Ticket-detail';
+import Booking, { Status } from '@common/booking/Booking';
 import { AUTO_CANCEL } from '@common/constant/jobname.constant';
 import mongoose from 'mongoose';
 import Ticket from '@common/ticket/Ticket';
@@ -23,7 +23,7 @@ export class AutoCancelJob {
         try {
             session.startTransaction()
 
-            await TicketDetail.findOneAndDelete({ 
+            await Booking.findOneAndDelete({ 
                 _id: job.data.ticketDetailId, 
                 status: Status.BOOKED 
             });

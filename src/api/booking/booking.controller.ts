@@ -1,24 +1,24 @@
 import logger from '@common/logger';
 import { Request, Response } from 'express';
-import TicketDetail from '@common/ticket-detail/Ticket-detail';
 import eventbus from '@common/eventbus';
 import { EVENT_BOOKING_CREATED } from '@common/constant/event.constant';
 import { StatusCode } from '@config/status-code';
+import Booking from '@common/booking/Booking';
 
-export class TicketDetailController {
+export class BookingController {
     static async addBooking(req: Request, res: Response): Promise<void> {
         try {
             const { ticketId, userId } = req.body;
             // lock
-            const td = new TicketDetail({
+            const booking = new Booking({
                 ticket_id: ticketId,
                 user_id: userId,
             });
 
-            const data = await td.save();
+            const data = await booking.save();
 
             eventbus.emit(EVENT_BOOKING_CREATED, { 
-                ticketDetailId: data._id, 
+                bookingId: data._id, 
                 ticketId: data.ticket_id 
             });
 
