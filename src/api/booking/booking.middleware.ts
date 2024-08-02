@@ -5,11 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 
 export class BookingMiddleware {
-    static async checkQuantity(
-        req: Request,
-        res: Response,
-        next: NextFunction,
-    ): Promise<void> {
+    static async checkQuantity(req: Request, res: Response, next: NextFunction): Promise<void> {
         const session = await mongoose.startSession();
         try {
             session.startTransaction();
@@ -42,9 +38,13 @@ export class BookingMiddleware {
             } else next(); // quantity <= 1 && locked = false => first person
         } catch (error) {
             logger.error(error);
-            session.abortTransaction().finally(() => {
-                session.endSession();
-            });
+            session
+                .abortTransaction()
+                .catch((error) => logger.error(error.message))
+                .finally(() => {
+                    session.endSession();
+                    res.status(StatusCode.SERVER_ERROR).json(error.message);
+                });
         }
     }
 }

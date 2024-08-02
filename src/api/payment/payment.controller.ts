@@ -12,9 +12,7 @@ export class PaymentController {
         try {
             const body = req.body as any;
 
-            const data = await PaymentService.confirmPayment(
-                body as IPaymentServiceCreate,
-            );
+            const data = await PaymentService.confirmPayment(body as IPaymentServiceCreate);
 
             res.status(StatusCode.CREATED).json({
                 message: 'payment success!',
@@ -32,9 +30,7 @@ export class PaymentController {
         try {
             const body = req.body as any;
 
-            const data = await PaymentService.bookingCancel(
-                body as IPaymentServiceCancel,
-            );
+            const data = await PaymentService.bookingCancel(body as IPaymentServiceCancel);
 
             res.status(StatusCode.OK).json({
                 message: 'booking has canceled!',

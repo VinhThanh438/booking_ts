@@ -1,10 +1,7 @@
 import eventbus from '@common/eventbus';
-import { DoneCallback, Job } from 'bull';
+import { DoneCallback } from 'bull';
 import logger from '@common/logger';
-import {
-    EVENT_BOOKING_CANCELED,
-    EVENT_PAYMENT_CREATED,
-} from '@common/constant/event.constant';
+import { EVENT_BOOKING_CANCELED, EVENT_PAYMENT_CREATED } from '@common/constant/event.constant';
 import { QueueService } from '@common/queue/queue.service';
 import {
     DEDUCT_USER_MONEY,
@@ -19,10 +16,7 @@ export class PaymentEvent {
         eventbus.on(EVENT_BOOKING_CANCELED, PaymentEvent.canceledHandler);
     }
 
-    public static async createdHandler(
-        data: IPaymentEvent,
-        done: DoneCallback,
-    ): Promise<void> {
+    public static async createdHandler(data: IPaymentEvent, done: DoneCallback): Promise<void> {
         try {
             const { user_id, total } = data;
 
@@ -33,10 +27,7 @@ export class PaymentEvent {
         }
     }
 
-    public static async canceledHandler(
-        data: IPaymentEvent,
-        done: DoneCallback,
-    ): Promise<void> {
+    public static async canceledHandler(data: IPaymentEvent, done: DoneCallback): Promise<void> {
         try {
             const { user_id, ticket_id, total } = data;
 

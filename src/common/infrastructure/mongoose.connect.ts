@@ -1,4 +1,4 @@
-import mongoose, { ConnectOptions } from 'mongoose';
+import mongoose from 'mongoose';
 import { MONGO_URL } from '@config/environment';
 import logger from '@common/logger';
 

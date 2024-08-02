@@ -1,8 +1,5 @@
 import logger from '@common/logger';
-import {
-    IUserLogInService,
-    IUserRegisterService,
-} from './user-servive.interface';
+import { IUserLogInService, IUserRegisterService } from './user-servive.interface';
 import User, { IUser } from './User';
 import bcrypt from 'bcrypt';
 import { Token } from '@config/token';
@@ -44,10 +41,7 @@ export class UserService {
             if (!userData) throw new Error('user not found!');
 
             // compare password
-            const result = await bcrypt.compare(
-                req.password,
-                userData.password,
-            );
+            const result = await bcrypt.compare(req.password, userData.password);
 
             if (!result) throw new Error('incorrect password!');
 

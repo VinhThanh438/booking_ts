@@ -4,7 +4,7 @@ import logger from '@common/logger';
 
 export class ConnectRedis {
     private static client: Redis;
-    private static subcriber: Redis;
+    // private static subcriber: Redis;
     private static allClients: Redis[] = [];
 
     static async getClient(): Promise<Redis> {
@@ -102,12 +102,7 @@ export class ConnectRedis {
             ? ConnectRedis.serialize(value)
             : (value as string);
         if (ttl > 0) {
-            return (await ConnectRedis.getClient()).set(
-                key,
-                stringValue,
-                'EX',
-                ttl,
-            );
+            return (await ConnectRedis.getClient()).set(key, stringValue, 'EX', ttl);
         }
         return (await ConnectRedis.getClient()).set(key, stringValue);
     }

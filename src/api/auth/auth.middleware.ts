@@ -5,11 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 export class AuthMidleware {
-    public static async requireAuth(
-        req: Request,
-        res: Response,
-        next: NextFunction,
-    ) {
+    public static async requireAuth(req: Request, res: Response, next: NextFunction) {
         try {
             const accessToken = req.headers.accesstoken;
 
@@ -27,12 +23,8 @@ export class AuthMidleware {
 
                 // get refresh token
                 const ip = req.socket.remoteAddress;
-                const refreshToken = await ConnectRedis.get(
-                    `RFT-${data.user_id}-${ip}`,
-                );
-                const isRefreshTokenExpired = await isTokenExpried(
-                    refreshToken,
-                );
+                const refreshToken = await ConnectRedis.get(`RFT-${data.user_id}-${ip}`);
+                const isRefreshTokenExpired = await isTokenExpried(refreshToken);
 
                 // check refresh token expired time
                 if (isRefreshTokenExpired) {

@@ -4,7 +4,7 @@ import Booking from './Booking';
 import eventbus from '@common/eventbus';
 import { EVENT_BOOKING_CREATED } from '@common/constant/event.constant';
 
-export class BookingSerVice {
+export class BookingService {
     static async addBooking(req: IBookingService): Promise<void> {
         try {
             const data = await Booking.create(
