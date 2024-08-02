@@ -15,7 +15,7 @@ export class UserService {
             });
 
             if (existedUser) {
-                throw new Error('user name has existed!');
+                throw new Error('user name already exits!');
             } else {
                 const salt = await bcrypt.genSalt(10);
                 const hashed = await bcrypt.hash(req.password, salt);
@@ -45,7 +45,7 @@ export class UserService {
             const result = await bcrypt.compare(req.password, userData.password);
 
             if (!result)
-                throw new Error('password is incorrect!')
+                throw new Error('incorrect password!')
 
             // set token
             const token = await Token.getToken(userData.transform());
