@@ -1,17 +1,18 @@
-import logger from "@common/logger";
-import Ticket, { ITicket, ITicketResponse } from "./Ticket";
-import { ITicketPanigation, ITicketRequest } from "./ticket-request.interface";
-import { pageNumber } from "@common/constant/page-number";
-import { SortOrder } from "mongoose";
+import logger from '@common/logger';
+import Ticket, { ITicket, ITicketResponse } from './Ticket';
+import { ITicketPanigation, ITicketRequest } from './ticket-service.interface';
+import { pageNumber } from '@common/constant/page-number';
+import { SortOrder } from 'mongoose';
 
 export class TicketService {
     static async getAll(currentPage: number): Promise<ITicket[]> {
         try {
-            return Ticket.find()
-            .skip(pageNumber * currentPage - pageNumber)
-            .limit(pageNumber);
+            return await Ticket.find()
+                .skip(pageNumber * currentPage - pageNumber)
+                .limit(pageNumber);
         } catch (error) {
-            logger.error(error)
+            logger.error(error);
+            throw new Error(error.message)
         }
     }
 
@@ -26,19 +27,21 @@ export class TicketService {
             if (req.field == 'quantity') sortOption = { quantity: num }; // sort by quantity
 
             return await Ticket.find()
-            .sort(sortOption)
-            .skip(pageNumber * req.page - pageNumber)
-            .limit(pageNumber);
+                .sort(sortOption)
+                .skip(pageNumber * req.page - pageNumber)
+                .limit(pageNumber);
         } catch (error) {
-            logger.error(error)
+            logger.error(error.message);
+            throw new Error(error.message)
         }
     }
 
     static async addTicket(req: ITicketRequest): Promise<ITicket> {
         try {
-            return await Ticket.create(new Ticket(req))
+            return await Ticket.create(new Ticket(req));
         } catch (error) {
-            logger.error(error)
+            logger.error(error.message);
+            throw new Error(error.message)
         }
     }
 }

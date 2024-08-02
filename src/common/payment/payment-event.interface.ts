@@ -1,5 +1,5 @@
 export interface IPaymentEvent {
-    userId: string,
-    ticketId: string,
-    total: number
+    userId: string;
+    ticketId: string;
+    total: number;
 }

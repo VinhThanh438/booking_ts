@@ -41,7 +41,7 @@ export class AutoCancelJob {
 
             logger.info('Booking has been canceled!');
             await session.commitTransaction();
-            session.endSession()
+            session.endSession();
             done();
         } catch (error) {
             session.abortTransaction().finally(() => {

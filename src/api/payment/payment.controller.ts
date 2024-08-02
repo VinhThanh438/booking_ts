@@ -37,7 +37,7 @@ export class PaymentController {
         } catch (error) {
             session.abortTransaction().finally(() => {
                 logger.error('payment could not be confirmed!', error);
-                session.endSession()
+                session.endSession();
                 res.status(StatusCode.REQUEST_FORBIDDEN).json({
                     message: 'payment could not be confirmed!',
                 });
@@ -70,7 +70,7 @@ export class PaymentController {
             }
 
             await session.commitTransaction();
-            session.endSession()
+            session.endSession();
 
             res.status(StatusCode.OK).json({
                 message: 'booking has canceled!',
@@ -78,7 +78,7 @@ export class PaymentController {
             });
         } catch (error) {
             session.abortTransaction().finally(() => {
-                session.endSession()
+                session.endSession();
                 res.status(StatusCode.REQUEST_FORBIDDEN).json({
                     message: 'payment could not be confirmed!',
                     error,

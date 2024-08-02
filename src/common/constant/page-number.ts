@@ -1,1 +1,1 @@
-export const pageNumber: number = 4
+export const pageNumber: number = 4;

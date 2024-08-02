@@ -1,4 +1,4 @@
 export interface IBookingEvent {
-    bookingId: string,
-    ticketId: string
+    bookingId: string;
+    ticketId: string;
 }

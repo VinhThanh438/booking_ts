@@ -1,5 +1,5 @@
 export interface IUserEvent {
-    userId: string,
-    ip: string,
-    refreshToken: string
+    userId: string;
+    ip: string;
+    refreshToken: string;
 }

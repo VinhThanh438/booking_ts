@@ -34,7 +34,7 @@ export class Refund {
                 await user.save();
 
                 await session.commitTransaction();
-                session.endSession()
+                session.endSession();
                 logger.info('successfully refunded!');
             } else logger.error('user not found');
 
