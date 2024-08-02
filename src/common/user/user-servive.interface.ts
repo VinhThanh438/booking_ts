@@ -4,6 +4,6 @@ export interface IUserRegisterService {
 }
 
 export interface IUserLogInService {
-    user_name: string,
-    password: string
+    user_name: string;
+    password: string;
 }

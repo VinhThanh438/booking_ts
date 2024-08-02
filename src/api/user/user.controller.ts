@@ -2,7 +2,10 @@ import { StatusCode } from '@config/status-code';
 import { NextFunction, Request, Response } from 'express';
 import logger from '@common/logger';
 import { UserService } from '@common/user/user.service';
-import { IUserLogInService, IUserRegisterService } from '@common/user/user-servive.interface';
+import {
+    IUserLogInService,
+    IUserRegisterService,
+} from '@common/user/user-servive.interface';
 
 export class UserController {
     static async register(req: Request, res: Response): Promise<void> {
@@ -28,7 +31,10 @@ export class UserController {
             const body = req.body as any;
             const ip = req.socket.remoteAddress;
 
-            const token = await UserService.logIn(body as IUserLogInService, ip)
+            const token = await UserService.logIn(
+                body as IUserLogInService,
+                ip,
+            );
 
             res.status(StatusCode.OK).json({
                 message: 'loged in successfully!',

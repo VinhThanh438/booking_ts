@@ -12,7 +12,7 @@ export class TicketService {
                 .limit(pageNumber);
         } catch (error) {
             logger.error(error);
-            throw new Error(error.message)
+            throw new Error(error.message);
         }
     }
 
@@ -32,7 +32,7 @@ export class TicketService {
                 .limit(pageNumber);
         } catch (error) {
             logger.error(error.message);
-            throw new Error(error.message)
+            throw new Error(error.message);
         }
     }
 
@@ -41,7 +41,7 @@ export class TicketService {
             return await Ticket.create(new Ticket(req));
         } catch (error) {
             logger.error(error.message);
-            throw new Error(error.message)
+            throw new Error(error.message);
         }
     }
 }

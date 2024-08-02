@@ -18,7 +18,7 @@ export class TicketEvent {
             logger.info('Ticket updated');
         } catch (error) {
             logger.error(error.message);
-            throw Error(error.message)
+            throw Error(error.message);
         }
     }
 }

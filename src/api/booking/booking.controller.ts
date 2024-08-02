@@ -9,7 +9,7 @@ export class BookingController {
         try {
             const body = req.body as any;
 
-            await BookingSerVice.addBooking(body as IBookingService)
+            await BookingSerVice.addBooking(body as IBookingService);
 
             res.status(StatusCode.OK).json({ message: 'created' });
         } catch (error) {

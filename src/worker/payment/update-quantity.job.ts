@@ -22,11 +22,11 @@ export class UpdateQuantity {
 
     static async handler(job: Job, done: DoneCallback): Promise<void> {
         try {
-            const { ticketId } = job.data;
+            const { ticket_id } = job.data;
 
             await Ticket.findOneAndUpdate(
                 {
-                    _id: ticketId,
+                    _id: ticket_id,
                 },
                 {
                     $inc: { quantity: 1 },

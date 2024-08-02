@@ -24,10 +24,10 @@ export class PaymentEvent {
         done: DoneCallback,
     ): Promise<void> {
         try {
-            const { userId, total } = data;
+            const { user_id, total } = data;
 
             const queue = await QueueService.getQueue(DEDUCT_USER_MONEY);
-            await queue.add({ userId, total });
+            await queue.add({ user_id, total });
         } catch (error) {
             logger.error('can not update user`s balance!', error);
         }
@@ -38,16 +38,16 @@ export class PaymentEvent {
         done: DoneCallback,
     ): Promise<void> {
         try {
-            const { userId, ticketId, total } = data;
+            const { user_id, ticket_id, total } = data;
 
             // refund to user (refund money = 90% of ticket price)
             let queue = await QueueService.getQueue(REFUND_TO_USER);
-            await queue.add({ userId, total });
+            await queue.add({ user_id, total });
             logger.info('Money has been refunded to user');
 
             // update ticket quantity
             queue = await QueueService.getQueue(UPDATE_TICKET_QUANTITY);
-            await queue.add({ ticketId });
+            await queue.add({ ticket_id });
             logger.info('Quantity has been updated');
         } catch (error) {
             logger.error('can not update user`s balance!', error);

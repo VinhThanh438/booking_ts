@@ -1,5 +1,8 @@
 import logger from '@common/logger';
-import { IUserLogInService, IUserRegisterService } from './user-servive.interface';
+import {
+    IUserLogInService,
+    IUserRegisterService,
+} from './user-servive.interface';
 import User, { IUser } from './User';
 import bcrypt from 'bcrypt';
 import { Token } from '@config/token';
@@ -29,7 +32,7 @@ export class UserService {
             }
         } catch (error) {
             logger.error(error.message);
-            throw new Error(error.message)
+            throw new Error(error.message);
         }
     }
 
@@ -38,14 +41,15 @@ export class UserService {
             const userData = await User.findOne({ user_name: req.user_name });
 
             // check user name
-            if (!userData)
-                throw new Error('user not found!')
+            if (!userData) throw new Error('user not found!');
 
             // compare password
-            const result = await bcrypt.compare(req.password, userData.password);
+            const result = await bcrypt.compare(
+                req.password,
+                userData.password,
+            );
 
-            if (!result)
-                throw new Error('incorrect password!')
+            if (!result) throw new Error('incorrect password!');
 
             // set token
             const token = await Token.getToken(userData.transform());
@@ -57,10 +61,10 @@ export class UserService {
                 refreshToken: token.refreshToken,
             });
 
-            return token
+            return token;
         } catch (error) {
             logger.error(error.message);
-            throw new Error(error.message)
+            throw new Error(error.message);
         }
     }
 }

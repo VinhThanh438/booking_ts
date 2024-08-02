@@ -53,7 +53,7 @@ export class TicketController {
             logger.error('can not add tickets', error);
             res.status(StatusCode.REQUEST_FORBIDDEN).json({
                 message: 'can not add tickets',
-                errorMessage: error.message
+                errorMessage: error.message,
             });
         }
     }

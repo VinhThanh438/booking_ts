@@ -22,11 +22,11 @@ export class Refund {
         try {
             session.startTransaction();
 
-            const { userId, total } = job.data;
+            const { user_id, total } = job.data;
 
             const refundMoney = (total / 100) * 90;
 
-            const user = await User.findById(userId);
+            const user = await User.findById(user_id);
 
             if (user) {
                 user.balance += refundMoney;
