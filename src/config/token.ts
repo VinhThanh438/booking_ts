@@ -23,7 +23,7 @@ export class Token {
             },
             ACCESSTOKEN_KEY,
             {
-                expiresIn: '120s',
+                expiresIn: '120s', // 120 seconds
             },
         );
     }
@@ -37,7 +37,7 @@ export class Token {
             },
             REFRESHTOKEN_KEY,
             {
-                expiresIn: '1d',
+                expiresIn: '1d', // 1 day
             },
         );
     }

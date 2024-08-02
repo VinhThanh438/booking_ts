@@ -44,11 +44,14 @@ export class AutoCancelJob {
             session.endSession();
             done();
         } catch (error) {
-            session.abortTransaction().finally(() => {
-                logger.error('Can not delete booking', error);
-                session.endSession();
-                done(error);
-            });
+            session
+                .abortTransaction()
+                .catch((err) => logger.error(err.message))
+                .finally(() => {
+                    logger.error('Can not delete booking', error);
+                    session.endSession();
+                    done(error);
+                });
         }
     }
 }

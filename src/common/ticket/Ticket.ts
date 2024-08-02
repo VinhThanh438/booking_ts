@@ -34,8 +34,6 @@ const TicketSchema: Schema<ITicket> = new Schema(
 
 TicketSchema.method({
     /**
-     * Transform Sample object to API response
-     *
      * @returns
      */
     transform(): ITicketResponse {
