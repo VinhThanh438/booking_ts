@@ -12,7 +12,7 @@ export class UserController {
             await UserService.register(body as IUserRegisterService);
 
             res.status(StatusCode.CREATED).json({
-                message: 'registed successfully! ',
+                message: 'registered successfully! ',
             });
         } catch (error) {
             logger.error(error.message);
